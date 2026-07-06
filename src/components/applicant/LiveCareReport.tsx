@@ -16,6 +16,10 @@ export function LiveCareReport({ items }: LiveCareReportProps) {
         {items.map((item) => (
           <li key={`${item.time}-${item.label}`}>
             <time>{item.time}</time>
+            <div className="timeline-dot-track" aria-hidden="true">
+              <span />
+              <i />
+            </div>
             <div>
               <strong>{item.label}</strong>
               {item.description && <p>{item.description}</p>}

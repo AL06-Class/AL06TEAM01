@@ -35,7 +35,7 @@ export function ReservationPaymentCard({
         </div>
         <div>
           <dt>돌봄 유형</dt>
-          <dd>{careRequest.careType || "가사 도움"}</dd>
+          <dd>{careRequest.careTypes.length > 0 ? careRequest.careTypes.join(", ") : "가사 도움"}</dd>
         </div>
         <div>
           <dt>결제 방식</dt>

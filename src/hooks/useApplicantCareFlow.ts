@@ -11,7 +11,7 @@ const initialCareRequest: CareRequest = {
   region: "서울 강남구",
   date: "2025-05-17",
   time: "09:00-12:00",
-  careType: "가사 도움",
+  careTypes: ["가사 도움"],
   paymentPlan: "single",
   proposedPrice: "30000",
   preferredSkills: "요양보호사 자격증, 디지털 기기 도움, 산책·취미 동행 가능",
@@ -41,6 +41,17 @@ export function useApplicantCareFlow() {
       ...currentRequest,
       [field]: value
     }));
+  };
+
+  const handleToggleCareType = (careType: string) => {
+    setCareRequest((currentRequest) => {
+      const isSelected = currentRequest.careTypes.includes(careType);
+      const careTypes = isSelected
+        ? currentRequest.careTypes.filter((type) => type !== careType)
+        : [...currentRequest.careTypes, careType];
+
+      return { ...currentRequest, careTypes };
+    });
   };
 
   const handleFindProviders = () => {
@@ -93,6 +104,7 @@ export function useApplicantCareFlow() {
     onSelectPlan: handlePlanSelect,
     careRequest,
     onCareRequestChange: handleCareRequestChange,
+    onToggleCareType: handleToggleCareType,
     providers,
     selectedProviderId,
     selectedProvider,
