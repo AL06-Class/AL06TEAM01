@@ -4,7 +4,7 @@ export type CareRequest = {
   region: string;
   date: string;
   time: string;
-  careType: string;
+  careTypes: string[];
   paymentPlan: PaymentPlanType;
   proposedPrice: string;
   preferredSkills: string;

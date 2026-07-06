@@ -12,12 +12,12 @@ export function CarePlanOptions({
   onSelectPlan
 }: CarePlanOptionsProps) {
   return (
-    <section className="plan-section" aria-labelledby="care-plan-title">
+    <section className="plan-section" id="pricing" aria-labelledby="care-plan-title">
       <div className="journey-header">
-        <p className="section-kicker">결제 방식</p>
-        <h2 id="care-plan-title">건별 결제 또는 구독 패키지로 시작하세요</h2>
+        <p className="eyebrow">요금 · 결제 방식</p>
+        <h2 id="care-plan-title">필요한 만큼, 원하는 방식으로</h2>
         <p className="section-description">
-          한 번만 필요한 돌봄은 건별로, 정기적인 생활 도움은 월 단위 패키지로 선택합니다.
+          한 번만 필요한 돌봄은 건별로, 정기적인 생활 돌봄은 월 단위 패키지로 선택하세요.
         </p>
       </div>
 
