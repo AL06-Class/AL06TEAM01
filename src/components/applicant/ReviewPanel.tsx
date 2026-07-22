@@ -25,8 +25,8 @@ export function ReviewPanel({ reviews, onSaveReview }: ReviewPanelProps) {
   return (
     <section className="section-card compact-card" id="reviews" aria-labelledby="review-panel-title">
       <div className="section-card-header">
-        <p className="section-kicker">리뷰 & 후기</p>
-        <h2 id="review-panel-title">돌봄 후기</h2>
+        <p className="section-kicker">후기 & 신뢰</p>
+        <h2 id="review-panel-title">생활 도움 후기</h2>
       </div>
 
       <div className="rating-summary" aria-label="평점 5점 만점에 5점">
@@ -45,7 +45,7 @@ export function ReviewPanel({ reviews, onSaveReview }: ReviewPanelProps) {
 
       {isWriting ? (
         <div className="review-form">
-          <label htmlFor="review-content">리뷰 내용</label>
+          <label htmlFor="review-content">후기 내용</label>
           <textarea
             id="review-content"
             rows={3}
@@ -64,7 +64,7 @@ export function ReviewPanel({ reviews, onSaveReview }: ReviewPanelProps) {
         </div>
       ) : (
         <button className="primary-button full-button" type="button" onClick={() => setIsWriting(true)}>
-          리뷰 작성하기
+          후기 작성하기
         </button>
       )}
     </section>

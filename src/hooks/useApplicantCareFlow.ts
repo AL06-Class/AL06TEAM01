@@ -3,24 +3,24 @@ import { carePlans } from "../data/carePlans";
 import { careReportItems } from "../data/careReportItems";
 import { initialMessages } from "../data/messages";
 import { initialReviews } from "../data/reviews";
-import { providers } from "../data/providers";
+import { helpers } from "../data/providers";
 import type { CareRequest } from "../types/careRequest";
 import type { ReservationStatus } from "../types/reservation";
 
 const initialCareRequest: CareRequest = {
-  region: "서울 강남구",
-  date: "2025-05-17",
-  time: "09:00-12:00",
-  careType: "가사 도움",
+  region: "제주시 조천읍",
+  date: "2026-07-22",
+  time: "13:00-16:00",
+  careType: "장보기 동행",
   paymentPlan: "single",
-  proposedPrice: "30000",
-  preferredSkills: "요양보호사 자격증, 디지털 기기 도움, 산책·취미 동행 가능",
+  proposedPrice: "15000",
+  preferredSkills: "천천히 설명하기, 장보기 동행, 진행 상황 공유",
   requestNote: ""
 };
 
 export function useApplicantCareFlow() {
   const [careRequest, setCareRequest] = useState(initialCareRequest);
-  const [selectedProviderId, setSelectedProviderId] = useState(providers[0].id);
+  const [selectedHelperId, setSelectedHelperId] = useState(helpers[0].id);
   const [selectedPlanId, setSelectedPlanId] = useState(carePlans[0].id);
   const [reservationStatus, setReservationStatus] = useState<ReservationStatus>("pending");
   const [messages, setMessages] = useState(initialMessages);
@@ -30,7 +30,7 @@ export function useApplicantCareFlow() {
   const guideSectionRef = useRef<HTMLDivElement>(null);
   const messageSectionRef = useRef<HTMLDivElement>(null);
 
-  const selectedProvider = providers.find((provider) => provider.id === selectedProviderId);
+  const selectedHelper = helpers.find((helper) => helper.id === selectedHelperId);
 
   const scrollTo = (element: HTMLDivElement | null) => {
     element?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -43,7 +43,7 @@ export function useApplicantCareFlow() {
     }));
   };
 
-  const handleFindProviders = () => {
+  const handleFindHelpers = () => {
     setReservationStatus("confirmed");
   };
 
@@ -69,7 +69,7 @@ export function useApplicantCareFlow() {
       ...currentMessages,
       {
         id: `message-${currentMessages.length + 1}`,
-        sender: "applicant",
+        sender: "guardian",
         content,
         time: "방금"
       }
@@ -93,12 +93,12 @@ export function useApplicantCareFlow() {
     onSelectPlan: handlePlanSelect,
     careRequest,
     onCareRequestChange: handleCareRequestChange,
-    providers,
-    selectedProviderId,
-    selectedProvider,
-    onSelectProvider: setSelectedProviderId,
+    helpers,
+    selectedHelperId,
+    selectedHelper,
+    onSelectHelper: setSelectedHelperId,
     reservationStatus,
-    onFindProviders: handleFindProviders,
+    onFindHelpers: handleFindHelpers,
     onPay: handlePay,
     careReportItems,
     messages,

@@ -1,0 +1,444 @@
+
+> dksetting@0.0.0 dev
+> vite --host 127.0.0.1
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m427[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[2m오후 1:46:16[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantMainHero.tsx[22m
+[2m오후 1:52:22[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantMainHero.tsx[22m
+[2m오후 1:52:52[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 1:53:09[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 1:53:42[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 1:58:49[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 1:59:17[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProviderSearch.tsx[22m
+[2m오후 2:00:22[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:00:29[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:01:04[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:04:16[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:04:17[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProviderSearch.tsx[22m
+[2m오후 2:04:28[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:18:15[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:21:18[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:21:49[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:21:59[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:33:29[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:34:04[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:34:40[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:36:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:36:31[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\team1\src\components\applicant\ApplicantCareFlow.tsx: Unexpected token (82:6)
+
+[0m [90m 80 |[31m         [33m/[31m[33m>[31m
+ [90m 81 |[31m       ) [33m:[31m (
+[31m[1m>[22m[31m[90m 82 |[31m       ) [33m:[31m activeScreen [33m===[31m [32m"status"[31m [33m?[31m (
+ [90m    |[31m       [31m[1m^[22m[31m
+ [90m 83 |[31m         [33m<[31m[33mGuardianRequestStatus[31m
+ [90m 84 |[31m           careRequest[33m=[31m{careRequest}
+ [90m 85 |[31m           selectedProvider[33m=[31m{selectedProvider}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/team1/src/components/applicant/ApplicantCareFlow.tsx[39m:82:6
+[33m  80 |          />
+  81 |        ) : (
+  82 |        ) : activeScreen === "status" ? (
+     |                                     ^
+  83 |          <GuardianRequestStatus
+  84 |            careRequest={careRequest}[39m
+      at constructor (C:\team1\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\team1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.unexpected (C:\team1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\team1\node_modules\@babel\parser\lib\index.js:11709:12)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\team1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseExpression (C:\team1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (C:\team1\node_modules\@babel\parser\lib\index.js:4644:31)
+      at TypeScriptParserMixin.jsxParseElementAt (C:\team1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (C:\team1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (C:\team1\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9792:18)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10817:39
+[2m오후 2:36:31[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\team1\src\components\applicant\ApplicantCareFlow.tsx: Unexpected token (82:6)
+
+[0m [90m 80 |[31m         [33m/[31m[33m>[31m
+ [90m 81 |[31m       ) [33m:[31m (
+[31m[1m>[22m[31m[90m 82 |[31m       ) [33m:[31m activeScreen [33m===[31m [32m"status"[31m [33m?[31m (
+ [90m    |[31m       [31m[1m^[22m[31m
+ [90m 83 |[31m         [33m<[31m[33mGuardianRequestStatus[31m
+ [90m 84 |[31m           careRequest[33m=[31m{careRequest}
+ [90m 85 |[31m           selectedProvider[33m=[31m{selectedProvider}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/team1/src/components/applicant/ApplicantCareFlow.tsx[39m:82:6
+[33m  80 |          />
+  81 |        ) : (
+  82 |        ) : activeScreen === "status" ? (
+     |                                     ^
+  83 |          <GuardianRequestStatus
+  84 |            careRequest={careRequest}[39m
+      at constructor (C:\team1\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\team1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.unexpected (C:\team1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\team1\node_modules\@babel\parser\lib\index.js:11709:12)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\team1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseExpression (C:\team1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (C:\team1\node_modules\@babel\parser\lib\index.js:4644:31)
+      at TypeScriptParserMixin.jsxParseElementAt (C:\team1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (C:\team1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (C:\team1\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9792:18)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10817:39
+[2m오후 2:36:31[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\team1\src\components\applicant\ApplicantCareFlow.tsx: Unexpected token (82:6)
+
+[0m [90m 80 |[31m         [33m/[31m[33m>[31m
+ [90m 81 |[31m       ) [33m:[31m (
+[31m[1m>[22m[31m[90m 82 |[31m       ) [33m:[31m activeScreen [33m===[31m [32m"status"[31m [33m?[31m (
+ [90m    |[31m       [31m[1m^[22m[31m
+ [90m 83 |[31m         [33m<[31m[33mGuardianRequestStatus[31m
+ [90m 84 |[31m           careRequest[33m=[31m{careRequest}
+ [90m 85 |[31m           selectedProvider[33m=[31m{selectedProvider}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/team1/src/components/applicant/ApplicantCareFlow.tsx[39m:82:6
+[33m  80 |          />
+  81 |        ) : (
+  82 |        ) : activeScreen === "status" ? (
+     |                                     ^
+  83 |          <GuardianRequestStatus
+  84 |            careRequest={careRequest}[39m
+      at constructor (C:\team1\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\team1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.unexpected (C:\team1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\team1\node_modules\@babel\parser\lib\index.js:11709:12)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (C:\team1\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\team1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseExpression (C:\team1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (C:\team1\node_modules\@babel\parser\lib\index.js:4644:31)
+      at TypeScriptParserMixin.jsxParseElementAt (C:\team1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (C:\team1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (C:\team1\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9792:18)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10817:39
+[2m오후 2:36:42[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:37:21[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:41:50[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianScheduleStatus.tsx[22m
+[2m오후 2:42:03[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:42:03[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\team1\src\components\applicant\ApplicantCareFlow.tsx: Unexpected token, expected "}" (97:8)
+
+[0m [90m  95 |[31m           onOpenChat[33m=[31m{() [33m=>[31m setActiveScreen([32m"chat"[31m)}
+ [90m  96 |[31m         [33m/[31m[33m>[31m
+[31m[1m>[22m[31m[90m  97 |[31m       ) [33m:[31m (
+ [90m     |[31m         [31m[1m^[22m[31m
+ [90m  98 |[31m         [33m<[31m[33mGuardianChat[31m
+ [90m  99 |[31m           careRequest[33m=[31m{careRequest}
+ [90m 100 |[31m           messages[33m=[31m{messages}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/team1/src/components/applicant/ApplicantCareFlow.tsx[39m:97:8
+[33m  97 |        ) : (
+  98 |          <GuardianChat
+  99 |            careRequest={careRequest}
+     |     ^
+  100|            messages={messages}
+  101|            selectedProvider={selectedProvider}[39m
+      at constructor (C:\team1\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\team1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.unexpected (C:\team1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at TypeScriptParserMixin.expect (C:\team1\node_modules\@babel\parser\lib\index.js:6916:12)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (C:\team1\node_modules\@babel\parser\lib\index.js:4649:10)
+      at TypeScriptParserMixin.jsxParseElementAt (C:\team1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (C:\team1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (C:\team1\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9792:18)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10817:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\team1\node_modules\@babel\parser\lib\index.js:10817:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\team1\node_modules\@babel\parser\lib\index.js:12510:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\team1\node_modules\@babel\parser\lib\index.js:11692:28)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\team1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12438:16)
+      at TypeScriptParserMixin.parseExpression (C:\team1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.parseReturnStatement (C:\team1\node_modules\@babel\parser\lib\index.js:13159:28)
+      at TypeScriptParserMixin.parseStatementContent (C:\team1\node_modules\@babel\parser\lib\index.js:12815:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\team1\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\team1\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\team1\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\team1\node_modules\@babel\parser\lib\index.js:13333:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\team1\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseBlock (C:\team1\node_modules\@babel\parser\lib\index.js:13314:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\team1\node_modules\@babel\parser\lib\index.js:12117:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\team1\node_modules\@babel\parser\lib\index.js:12103:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\team1\node_modules\@babel\parser\lib\index.js:9189:18)
+[2m오후 2:42:14[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:42:14[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\team1\src\components\applicant\ApplicantCareFlow.tsx: Unexpected token, expected "}" (97:8)
+
+[0m [90m  95 |[31m           onOpenChat[33m=[31m{() [33m=>[31m setActiveScreen([32m"chat"[31m)}
+ [90m  96 |[31m         [33m/[31m[33m>[31m
+[31m[1m>[22m[31m[90m  97 |[31m       ) [33m:[31m (
+ [90m     |[31m         [31m[1m^[22m[31m
+ [90m  98 |[31m         [33m<[31m[33mGuardianChat[31m
+ [90m  99 |[31m           careRequest[33m=[31m{careRequest}
+ [90m 100 |[31m           messages[33m=[31m{messages}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/team1/src/components/applicant/ApplicantCareFlow.tsx[39m:97:8
+[33m  97 |        ) : (
+  98 |          <GuardianChat
+  99 |            careRequest={careRequest}
+     |     ^
+  100|            messages={messages}
+  101|            selectedProvider={selectedProvider}[39m
+      at constructor (C:\team1\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\team1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.unexpected (C:\team1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at TypeScriptParserMixin.expect (C:\team1\node_modules\@babel\parser\lib\index.js:6916:12)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (C:\team1\node_modules\@babel\parser\lib\index.js:4649:10)
+      at TypeScriptParserMixin.jsxParseElementAt (C:\team1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (C:\team1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (C:\team1\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9792:18)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10817:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\team1\node_modules\@babel\parser\lib\index.js:10817:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\team1\node_modules\@babel\parser\lib\index.js:12510:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\team1\node_modules\@babel\parser\lib\index.js:11692:28)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\team1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\team1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (C:\team1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\team1\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\team1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (C:\team1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\team1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\team1\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\team1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\team1\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (C:\team1\node_modules\@babel\parser\lib\index.js:12438:16)
+      at TypeScriptParserMixin.parseExpression (C:\team1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.parseReturnStatement (C:\team1\node_modules\@babel\parser\lib\index.js:13159:28)
+      at TypeScriptParserMixin.parseStatementContent (C:\team1\node_modules\@babel\parser\lib\index.js:12815:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\team1\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\team1\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\team1\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\team1\node_modules\@babel\parser\lib\index.js:13333:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\team1\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseBlock (C:\team1\node_modules\@babel\parser\lib\index.js:13314:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\team1\node_modules\@babel\parser\lib\index.js:12117:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\team1\node_modules\@babel\parser\lib\index.js:12103:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\team1\node_modules\@babel\parser\lib\index.js:9189:18)
+[2m오후 2:42:46[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:43:10[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:46:40[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianChat.tsx[22m
+[2m오후 2:46:49[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:47:02[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:47:35[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:52:47[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 2:53:24[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:56:41[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProviderSearch.tsx[22m
+[2m오후 2:56:49[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 2:57:25[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 3:03:19[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 3:03:20[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 3:28:06[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestForm.tsx[22m
+[2m오후 3:28:28[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestForm.tsx[22m
+[2m오후 3:28:53[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestForm.tsx[22m
+[2m오후 3:29:03[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 3:29:17[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 3:32:42[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestForm.tsx[22m
+[2m오후 3:36:46[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestStatus.tsx[22m
+[2m오후 3:36:47[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestStatus.tsx[22m
+[2m오후 3:36:49[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianScheduleStatus.tsx[22m
+[2m오후 3:36:50[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianScheduleStatus.tsx[22m
+[2m오후 3:37:41[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianChat.tsx[22m
+[2m오후 3:37:42[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianChat.tsx[22m
+[2m오후 3:37:44[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProgressReport.tsx[22m
+[2m오후 3:37:45[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProgressReport.tsx[22m
+[2m오후 3:38:10[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianCompletionReview.tsx[22m
+[2m오후 3:38:11[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianCompletionReview.tsx[22m
+[2m오후 3:41:10[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantMainHero.tsx[22m
+[2m오후 3:41:40[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantMainHero.tsx[22m
+[2m오후 3:42:00[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProviderSearch.tsx[22m
+[2m오후 3:42:16[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestForm.tsx[22m
+[2m오후 3:42:53[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 3:43:01[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 3:43:25[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 3:49:22[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 3:53:03[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestStatus.tsx[22m
+[2m오후 3:53:05[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianRequestStatus.tsx[22m
+[2m오후 3:53:12[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 3:57:36[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianScheduleStatus.tsx[22m
+[2m오후 3:57:39[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianScheduleStatus.tsx[22m
+[2m오후 3:57:46[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 4:03:19[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianScheduleStatus.tsx[22m
+[2m오후 4:03:34[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 5:12:54[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianChat.tsx[22m
+[2m오후 5:12:56[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianChat.tsx[22m
+[2m오후 5:13:21[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProgressReport.tsx[22m
+[2m오후 5:13:22[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianProgressReport.tsx[22m
+[2m오후 5:13:53[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianCompletionReview.tsx[22m
+[2m오후 5:13:55[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/GuardianCompletionReview.tsx[22m
+[2m오후 5:14:07[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 5:14:23[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.css[22m
+[2m오후 6:09:27[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/CareRequestForm.tsx[22m
+[2m오후 6:09:29[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/CareRequestForm.tsx[22m
+[2m오후 6:09:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 6:09:31[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to load url /src/data/carePlans.ts (resolved id: C:/team1/src/data/carePlans.ts) in C:/team1/src/hooks/useApplicantCareFlow.ts. Does the file exist?
+[2m오후 6:09:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 6:09:35[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/HowItWorksSteps.tsx[22m
+[2m오후 6:09:37[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/HowItWorksSteps.tsx[22m
+[2m오후 6:10:26[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantMyPageCard.tsx[22m
+[2m오후 6:10:28[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantMyPageCard.tsx[22m
+[2m오후 6:10:30[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ProviderRecommendationList.tsx[22m
+[2m오후 6:10:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ProviderRecommendationList.tsx[22m
+[2m오후 6:10:34[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/LiveCareReport.tsx[22m
+[2m오후 6:10:35[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/LiveCareReport.tsx[22m
+[2m오후 6:10:37[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ReviewPanel.tsx[22m
+[2m오후 6:10:38[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ReviewPanel.tsx[22m
+[2m오후 6:12:41[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 6:12:43[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ApplicantCareFlow.tsx[22m
+[2m오후 6:13:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ReservationPaymentCard.tsx[22m
+[2m오후 6:13:33[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/ReservationPaymentCard.tsx[22m
+[2m오후 6:13:35[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/CarePlanOptions.tsx[22m
+[2m오후 6:13:37[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/applicant/CarePlanOptions.tsx[22m

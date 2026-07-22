@@ -1,6 +1,6 @@
 export type Message = {
   id: string;
-  sender: "provider" | "applicant";
+  sender: "helper" | "guardian";
   content: string;
   time?: string;
 };

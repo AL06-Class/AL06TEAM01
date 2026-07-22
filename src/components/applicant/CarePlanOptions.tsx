@@ -6,18 +6,14 @@ type CarePlanOptionsProps = {
   onSelectPlan: (planId: string) => void;
 };
 
-export function CarePlanOptions({
-  carePlans,
-  selectedPlanId,
-  onSelectPlan
-}: CarePlanOptionsProps) {
+export function CarePlanOptions({ carePlans, selectedPlanId, onSelectPlan }: CarePlanOptionsProps) {
   return (
     <section className="plan-section" aria-labelledby="care-plan-title">
       <div className="journey-header">
         <p className="section-kicker">결제 방식</p>
-        <h2 id="care-plan-title">건별 결제 또는 구독 패키지로 시작하세요</h2>
+        <h2 id="care-plan-title">건별 결제 또는 정기 패키지로 시작하세요</h2>
         <p className="section-description">
-          한 번만 필요한 돌봄은 건별로, 정기적인 생활 도움은 월 단위 패키지로 선택합니다.
+          한 번만 필요한 생활 도움은 건별로, 정기적인 생활 도움은 월 단위 패키지로 선택합니다.
         </p>
       </div>
 

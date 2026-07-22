@@ -7,6 +7,7 @@
 - 역할별 화면이 같은 데이터 기준을 사용하게 합니다.
 - 더미 데이터와 실제 DB 구조가 크게 달라지지 않게 합니다.
 - AI가 화면마다 임의의 데이터 구조를 만들지 않게 합니다.
+- 가치이음의 신뢰 기반 연결 서비스 구조가 화면과 데이터에 일관되게 반영되게 합니다.
 
 ## 기본값
 
@@ -14,14 +15,17 @@
 
 - 현재 선택된 유저의 `role`을 기준으로 화면을 분기합니다.
 - 데이터는 역할별 화면에서 필요한 정보만 필터링해서 보여줍니다.
+- 가치이음은 운영자가 도움 제공자를 배정하는 서비스가 아니라, 보호자 또는 신청자가 객관적 정보를 보고 직접 선택하는 연결 서비스입니다.
+- 민감 정보, 서비스 대상자 동의, 완료 인증 자료는 필요한 범위에서만 수집하고 노출합니다.
 
 ### 역할 기준
 
 역할 값은 아래를 기본으로 합니다.
 
-- `candidate`: 지원자
-- `recruiter`: 채용담당자
-- `interviewer`: 면접관
+- `guardian`: 신청자를 대신해 요청, 결제, 확인을 진행하는 보호자 또는 대리인
+- `requester`: 실제로 도움을 받는 신청자 또는 서비스 대상자
+- `helper`: 도움을 제공하는 가치 제공자
+- `operator`: 신고, 검수, 분쟁, 안전 정책을 관리하는 운영자
 
 역할 이름을 바꾸거나 새 역할을 추가하려면 먼저 팀 논의가 필요합니다.
 
@@ -32,6 +36,7 @@
 - 날짜는 문자열 또는 Firebase Timestamp 중 하나로 통일합니다.
 - 상태값은 자유 텍스트가 아니라 정해진 값만 사용합니다.
 - 화면별로 같은 의미의 필드를 다른 이름으로 만들지 않습니다.
+- 법적 오해를 줄이기 위해 `assigned`, `dispatch`, `medicalCare`, `nursingCare`처럼 배정, 파견, 의료, 요양을 암시하는 이름은 사용하지 않습니다.
 
 ### 공통 이름 사전 운영
 
@@ -74,245 +79,252 @@
 ### 컬렉션 이름
 
 - `users`: 유저
-- `companies`: 기업
-- `jobPostings`: 채용공고
-- `candidateProfiles`: 지원자 프로필
-- `applications`: 지원서
-- `scheduleConversations`: 일정 조율 챗봇 대화
-- `availabilitySlots`: 면접 가능 시간
-- `scheduleSuggestions`: 추천 면접 시간
-- `interviews`: 확정 또는 진행 중인 면접
-- `interviewQuestionSets`: 면접 질문 세트
-- `interviewQuestions`: 면접 질문
-- `evaluations`: 면접 평가
-- `evaluationCriteria`: 평가 기준
+- `guardianProfiles`: 보호자 또는 대리인 프로필
+- `requesterProfiles`: 도움을 받는 신청자 프로필
+- `helperProfiles`: 가치 제공자 신뢰 프로필
+- `serviceRequests`: 도움 요청
+- `requestMatches`: 요청과 가치 제공자 선택 또는 수락 상태
+- `conversations`: 요청 관련 대화방
+- `messages`: 대화 메시지
+- `payments`: 결제와 정산 기록
+- `serviceCompletions`: 완료 확인 기록
+- `reviews`: 후기
+- `reports`: 신고와 분쟁 접수
+- `consentRecords`: 신청자 동의와 민감 정보 제공 동의 기록
 
 ### 공통 필드 이름
 
 - `id`: 문서 또는 항목 식별자
 - `userId`: 유저 식별자
-- `candidateId`: 지원자 식별자
-- `recruiterId`: 채용담당자 식별자
-- `interviewerId`: 면접관 식별자
-- `companyId`: 기업 식별자
-- `jobPostingId`: 채용공고 식별자
-- `applicationId`: 지원서 식별자
-- `interviewId`: 면접 식별자
-- `conversationId`: 일정 조율 대화 식별자
-- `questionSetId`: 질문 세트 식별자
+- `guardianId`: 보호자 또는 대리인 식별자
+- `requesterId`: 도움을 받는 신청자 식별자
+- `helperId`: 가치 제공자 식별자
+- `operatorId`: 운영자 식별자
+- `requestId`: 도움 요청 식별자
+- `matchId`: 요청과 가치 제공자 선택 또는 수락 상태 식별자
+- `conversationId`: 대화방 식별자
+- `messageId`: 메시지 식별자
+- `paymentId`: 결제 식별자
+- `reviewId`: 후기 식별자
+- `reportId`: 신고 또는 분쟁 식별자
+- `consentRecordId`: 동의 기록 식별자
+- `role`: 유저 역할
 - `status`: 상태값
 - `title`: 제목
 - `description`: 설명
+- `category`: 도움 유형
+- `location`: 도움 장소
+- `scheduledAt`: 약속 시각
 - `startedAt`: 시작 시각
 - `endedAt`: 종료 시각
-- `scheduledAt`: 확정 시각
-- `source`: 생성 또는 판단 근거
 - `createdAt`: 생성 시각
 - `updatedAt`: 수정 시각
 
-### 커스텀 추가본
-
-- `helperId`: 도움 제공자 식별자
-- `requesterId`: 도움을 받는 신청자 식별자
-- `guardianId`: 신청자를 대신해 신청·결제·확인하는 보호자 또는 대리인 식별자
-
-
-
-
-
-
-
-### 과업별 공통 필드 이름
-
-#### 일정 조율 자동화
-
-- `availableStartAt`: 가능한 시작 시각
-- `availableEndAt`: 가능한 종료 시각
-- `preferredStartAt`: 선호 시작 시각
-- `preferredEndAt`: 선호 종료 시각
-- `suggestedStartAt`: 추천 시작 시각
-- `suggestedEndAt`: 추천 종료 시각
-- `confirmedStartAt`: 확정 시작 시각
-- `confirmedEndAt`: 확정 종료 시각
-- `recommendationReason`: 추천 이유
-- `priorityScore`: 추천 우선순위 점수
-- `message`: 챗봇 대화 메시지
-- `senderRole`: 메시지 작성자 역할
-
-#### 면접 질문 및 평가
-
-- `resumeSummary`: 이력서 요약
-- `portfolioSummary`: 포트폴리오 요약
-- `questionText`: 질문 내용
-- `questionType`: 질문 유형
-- `questionIntent`: 질문 의도
-- `evaluationItem`: 평가 항목
-- `score`: 점수
-- `comment`: 평가 의견
-
-#### UX/UI 개선
-
-- UX/UI 개선 작업은 기본적으로 새 DB 이름을 만들지 않습니다.
-- 화면 상태 저장이나 사용자 피드백 데이터가 필요할 때만 공통 이름 사전에 추가합니다.
-
-
-
 ### 역할 값
 
-- `helper`: 도움 제공자
+- `guardian`: 보호자 또는 대리인
 - `requester`: 도움을 받는 신청자
-- `guardian`: 신청자를 대신해 신청·결제·확인하는 보호자 또는 대리인
+- `helper`: 가치 제공자
+- `operator`: 운영자
 
 ### 상태값 초안
 
 - `draft`: 초안
 - `submitted`: 제출됨
 - `pending`: 대기 중
-- `proposed`: 제안됨
-- `confirmed`: 확정됨
-- `declined`: 거절됨
-- `scheduled`: 일정 확정
-- `generated`: 자동 생성됨
+- `available`: 선택 가능
 - `selected`: 선택됨
+- `proposed`: 제안됨
+- `accepted`: 수락됨
+- `declined`: 거절됨
+- `confirmed`: 확정됨
+- `scheduled`: 일정 확정
+- `inProgress`: 진행 중
 - `completed`: 완료
 - `cancelled`: 취소됨
+- `reported`: 신고됨
+- `refunded`: 환불됨
+
+### 동의와 안전 관련 필드 이름
+
+- `consentStatus`: 동의 상태
+- `consentedAt`: 동의 시각
+- `consentScope`: 동의 범위
+- `sensitiveInfoScope`: 민감 정보 제공 범위
+- `verificationStatus`: 인증 상태
+- `trustBadges`: 신뢰 배지 목록
+- `introVideoUrl`: 자기소개 영상 URL
+- `reviewCount`: 후기 수
+- `averageRating`: 평균 평점
+- `completionProofStatus`: 완료 인증 상태
+- `reportReason`: 신고 사유
 
 ## 데이터 모델 초안
 
-아래는 논의 출발점입니다. 실제 서비스 기획에 맞게 수정합니다.
+아래는 논의 출발점입니다. 실제 서비스 기획과 Firebase 구조에 맞게 수정합니다.
 
 ### users
 
 - `id`
 - `name`
 - `role`
-- `title`
-- `createdAt`
-- `updatedAt`
-
-### candidateProfiles
-
-- `id`
-- `userId`
-- `email`
 - `phone`
-- `position`
-- `resumeSummary`
-- `portfolioSummary`
-- `availableTimes`
+- `profileImageUrl`
 - `createdAt`
 - `updatedAt`
 
-### applications
-
-- `id`
-- `candidateId`
-- `jobPostingId`
-- `status`
-- `interviewerId`
-- `createdAt`
-- `updatedAt`
-
-### scheduleConversations
-
-- `id`
-- `applicationId`
-- `candidateId`
-- `recruiterId`
-- `status`
-- `message`
-- `senderRole`
-- `createdAt`
-- `updatedAt`
-
-### availabilitySlots
+### guardianProfiles
 
 - `id`
 - `userId`
-- `applicationId`
-- `availableStartAt`
-- `availableEndAt`
-- `status`
+- `requesterIds`
+- `relationship`
 - `createdAt`
 - `updatedAt`
 
-### scheduleSuggestions
+### requesterProfiles
 
 - `id`
-- `applicationId`
-- `suggestedStartAt`
-- `suggestedEndAt`
-- `recommendationReason`
-- `priorityScore`
-- `status`
+- `userId`
+- `guardianId`
+- `name`
+- `ageGroup`
+- `location`
+- `consentStatus`
+- `sensitiveInfoScope`
 - `createdAt`
 - `updatedAt`
 
-### interviews
+### helperProfiles
 
 - `id`
-- `applicationId`
-- `candidateId`
-- `interviewerId`
-- `confirmedStartAt`
-- `confirmedEndAt`
-- `status`
-- `createdAt`
-- `updatedAt`
-
-### interviewQuestionSets
-
-- `id`
-- `applicationId`
-- `interviewId`
-- `questions`
-- `source`
-- `status`
-- `createdAt`
-- `updatedAt`
-
-### interviewQuestions
-
-- `id`
-- `questionSetId`
-- `questionText`
-- `questionType`
-- `questionIntent`
-- `source`
-- `createdAt`
-- `updatedAt`
-
-### evaluationCriteria
-
-- `id`
-- `jobPostingId`
-- `evaluationItem`
+- `userId`
+- `name`
+- `profileImageUrl`
+- `introVideoUrl`
 - `description`
+- `serviceCategories`
+- `serviceAreas`
+- `verificationStatus`
+- `trustBadges`
+- `reviewCount`
+- `averageRating`
 - `createdAt`
 - `updatedAt`
 
-### evaluations
+### serviceRequests
 
 - `id`
-- `applicationId`
-- `interviewId`
-- `interviewerId`
-- `score`
+- `guardianId`
+- `requesterId`
+- `category`
+- `title`
+- `description`
+- `location`
+- `scheduledAt`
 - `status`
+- `createdAt`
+- `updatedAt`
+
+### requestMatches
+
+- `id`
+- `requestId`
+- `helperId`
+- `status`
+- `proposedAt`
+- `acceptedAt`
+- `confirmedAt`
+- `createdAt`
+- `updatedAt`
+
+### conversations
+
+- `id`
+- `requestId`
+- `guardianId`
+- `helperId`
+- `status`
+- `createdAt`
+- `updatedAt`
+
+### messages
+
+- `id`
+- `conversationId`
+- `senderId`
+- `senderRole`: `guardian`, `requester`, `helper`, `operator` 중 하나
+- `message`
+- `createdAt`
+- `updatedAt`
+
+### payments
+
+- `id`
+- `requestId`
+- `guardianId`
+- `helperId`
+- `status`
+- `amount`
+- `createdAt`
+- `updatedAt`
+
+### serviceCompletions
+
+- `id`
+- `requestId`
+- `helperId`
+- `guardianId`
+- `completionProofStatus`
+- `completedAt`
+- `createdAt`
+- `updatedAt`
+
+### reviews
+
+- `id`
+- `requestId`
+- `guardianId`
+- `helperId`
+- `score`
 - `comment`
+- `createdAt`
+- `updatedAt`
+
+### reports
+
+- `id`
+- `requestId`
+- `reporterId`
+- `reportReason`
+- `status`
+- `createdAt`
+- `updatedAt`
+
+### consentRecords
+
+- `id`
+- `requesterId`
+- `guardianId`
+- `consentStatus`
+- `consentScope`
+- `sensitiveInfoScope`
+- `consentedAt`
 - `createdAt`
 - `updatedAt`
 
 ## 최종 결정
 
-- 주요 컬렉션: 공통 이름 사전의 컬렉션 이름을 초안으로 사용
-- 역할 기준: `candidate`, `recruiter`, `interviewer`
+- 주요 컬렉션: 가치이음 MVP 기준의 `users`, `guardianProfiles`, `requesterProfiles`, `helperProfiles`, `serviceRequests`, `requestMatches`, `conversations`, `messages`, `payments`, `serviceCompletions`, `reviews`, `reports`, `consentRecords`
+- 역할 기준: `guardian`, `requester`, `helper`, `operator`
 - 필드명 규칙: 영어 `camelCase`
 - 날짜 저장 방식: 문자열 또는 Firebase Timestamp 중 하나로 통일
 - 상태값 기준: 자유 텍스트가 아니라 정해진 값만 사용
 - 더미 데이터 기준: 기능 검증에 필요한 최소만 작성
 - DB 연결 기준: 화면 컴포넌트와 데이터 접근 코드를 분리하고 Firebase 연결 코드는 한 곳에서 관리
 - 공통 이름 사전 기준: 새 컬렉션, 필드, 상태값, 역할 값은 구현 전에 이 문서에 먼저 추가
+- 표현 기준: 운영자 배정, 의료·요양 제공, 파견을 암시하는 데이터 이름은 사용하지 않음
+- 메시지 발신 역할 기준: `senderRole`은 공통 역할 값인 `guardian`, `requester`, `helper`, `operator`를 사용
 
 ## 변경 이력
 
@@ -320,3 +332,5 @@
 - 2026-05-29: 기본 데이터 기준을 최종 결정에 반영
 - 2026-05-29: 공통 이름 사전과 데이터 이름 추가 절차 반영
 - 2026-05-29: 일정 조율, 면접 질문 생성, 평가 과업에 필요한 공통 이름 보강
+- 2026-07-21: 가치이음 PRD 기준에 맞춰 역할, 컬렉션, 필드, 상태값 기준을 보호자·신청자·가치 제공자·운영자 구조로 정리
+- 2026-07-22: 메시지 발신 역할 값 기준을 `senderRole` 항목에 명시

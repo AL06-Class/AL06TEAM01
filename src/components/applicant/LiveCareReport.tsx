@@ -8,8 +8,8 @@ export function LiveCareReport({ items }: LiveCareReportProps) {
   return (
     <section className="section-card compact-card" aria-labelledby="live-care-report-title">
       <div className="section-card-header">
-        <p className="section-kicker">핵심기능 3 - 진행 / 소통</p>
-        <h2 id="live-care-report-title">실시간 케어 리포트</h2>
+        <p className="section-kicker">핵심 기능 3 - 진행 / 소통</p>
+        <h2 id="live-care-report-title">실시간 진행 리포트</h2>
       </div>
 
       <ol className="timeline-list">

@@ -17,7 +17,7 @@ export function ProviderRecommendationList({
     <section className="section-card" aria-labelledby="provider-list-title">
       <div className="section-card-header">
         <p className="section-kicker">신뢰 카드</p>
-        <h2 id="provider-list-title">조건에 맞는 검증 도우미</h2>
+        <h2 id="provider-list-title">조건에 맞는 가치이웃</h2>
       </div>
 
       <div className="provider-list">
@@ -35,7 +35,7 @@ export function ProviderRecommendationList({
                   <strong>{formatPrice(provider.price)}</strong>
                 </div>
                 <p>
-                  {provider.distance} · 1회 {formatPrice(provider.price)}
+                  {provider.distance} · 1시간 {formatPrice(provider.price)}
                 </p>
                 <p>{provider.description}</p>
                 <ul className="trust-list" aria-label={`${provider.name} 신뢰 이력`}>

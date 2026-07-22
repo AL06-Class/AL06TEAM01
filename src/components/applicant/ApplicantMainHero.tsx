@@ -2,79 +2,179 @@ import { SERVICE_NAME } from "../../constants";
 
 type ApplicantMainHeroProps = {
   onStartRequest: () => void;
-  onShowGuide: () => void;
+  onOpenSearch: () => void;
+  onOpenMatch: () => void;
+  onOpenChat: () => void;
+  onOpenProfile: () => void;
 };
 
-const featureItems = ["구독 패키지", "건별 결제", "신청자 제안 금액", "검증 도우미"];
+export function ApplicantMainHero({
+  onStartRequest,
+  onOpenSearch,
+  onOpenMatch,
+  onOpenChat,
+  onOpenProfile
+}: ApplicantMainHeroProps) {
+  const asset = (name: string) => `/figma-assets/${name}`;
 
-export function ApplicantMainHero({ onStartRequest, onShowGuide }: ApplicantMainHeroProps) {
   return (
-    <section className="app-hero" aria-labelledby="applicant-hero-title">
-      <nav className="top-nav" aria-label="주요 메뉴">
-        <a className="brand" href="#top" aria-label={`${SERVICE_NAME} 홈`}>
-          {SERVICE_NAME}
-        </a>
-        <div className="nav-links">
-          <a href="#service">서비스</a>
-          <a href="#how-to-use">이용방법</a>
-          <a href="#reviews">후기</a>
-          <a href="#support">고객센터</a>
+    <section className="guardian-home" aria-labelledby="guardian-home-title">
+      <header className="guardian-header">
+        <div className="guardian-brand-row">
+          <h1 id="guardian-home-title">{SERVICE_NAME}</h1>
+          <button className="relation-chip" type="button" aria-label="대상 가족 선택">
+            어머니 <img src={asset("icon-chevron.svg")} alt="" aria-hidden="true" />
+          </button>
         </div>
-        <a className="mypage-link" href="#my-page">
-          My Page
-        </a>
-      </nav>
+        <div className="guardian-header-actions" aria-label="알림과 내 정보">
+          <button className="icon-button" type="button" aria-label="알림">
+            <img src={asset("icon-bell.svg")} alt="" aria-hidden="true" />
+          </button>
+          <div className="user-avatar" aria-label="사용자 프로필">
+            <img src={asset("profile-user.png")} alt="" />
+          </div>
+        </div>
+      </header>
 
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <p className="eyebrow">{SERVICE_NAME} 돌봄 신청자 view</p>
-          <h1 id="applicant-hero-title">
-            우리 가족에게 필요한 돌봄을,
+      <div className="guardian-content">
+        <section className="consent-card" aria-label="부모님 동의 상태">
+          <div className="consent-title">
+            <img className="line-icon" src={asset("icon-shield.svg")} alt="" aria-hidden="true" />
+            <strong>부모님 동의 상태</strong>
+          </div>
+          <span className="consent-pill">서비스 이용 동의 완료</span>
+        </section>
+
+        <section className="status-card" aria-labelledby="next-care-title">
+          <img className="status-pattern" src={asset("card-pattern.svg")} alt="" aria-hidden="true" />
+          <div className="status-meta">
+            <span>D-1 내일 예정</span>
+            <small>요청 수락 완료</small>
+          </div>
+          <h2 id="next-care-title">
+            내일 오후 2시
             <br />
-            가까운 이웃에게 쉽게 요청하세요
-          </h1>
-          <p className="hero-description">
-            복잡한 절차 없이 필요한 시간에 돌봄을 신청하세요.
-          </p>
-          <div className="hero-actions">
-            <button className="primary-button" type="button" onClick={onStartRequest}>
-              돌봄 신청하기
-            </button>
-            <button className="secondary-button" type="button" onClick={onShowGuide}>
-              서비스 안내
-            </button>
-          </div>
-        </div>
+            <strong>장보기 동행</strong>이 예정되어 있어요
+          </h2>
 
-        <div className="hero-panel" aria-label="돌봄 신청 흐름 요약">
-          <div className="flow-step is-active">
-            <span>1</span>
-            <strong>요청</strong>
-            <p>지역과 시간을 입력합니다</p>
+          <div className="matched-provider-inline">
+            <div className="provider-face provider-face-small">
+              <img src={asset("provider-kim.png")} alt="" />
+            </div>
+            <div>
+              <span>가치이웃</span>
+              <strong>김민석</strong>
+            </div>
+            <button className="chat-circle" type="button" onClick={onOpenChat} aria-label="채팅 열기">
+              <img src={asset("icon-chat.svg")} alt="" aria-hidden="true" />
+            </button>
           </div>
-          <div className="flow-step">
-            <span>2</span>
-            <strong>탐색</strong>
-            <p>검증된 이웃 제공자를 비교합니다</p>
+
+          <div className="status-actions">
+            <button className="status-primary" type="button" onClick={onOpenMatch}>
+              일정 확인하기
+            </button>
+            <button className="status-secondary" type="button" onClick={onOpenChat}>
+              채팅하기
+            </button>
           </div>
-          <div className="flow-step">
-            <span>3</span>
-            <strong>예약</strong>
-            <p>건별 결제 또는 구독 패키지로 확정합니다</p>
+        </section>
+
+        <section className="provider-section" aria-labelledby="matched-provider-title">
+          <div className="section-title-row">
+            <h2 id="matched-provider-title">매칭된 가치이웃</h2>
+            <button type="button" onClick={onOpenMatch}>상세 정보</button>
           </div>
-          <div className="flow-step">
-            <span>4</span>
-            <strong>소통</strong>
-            <p>리포트와 메시지로 진행을 확인합니다</p>
-          </div>
-        </div>
+
+          <article className="provider-summary-card">
+            <div className="provider-photo">
+              <img src={asset("provider-kim.png")} alt="" />
+            </div>
+            <div className="provider-summary-main">
+              <div className="provider-name-row">
+                <div>
+                  <strong>김민석</strong>
+                  <span className="location-line">
+                    <img src={asset("icon-location.svg")} alt="" aria-hidden="true" />
+                    제주시 조천읍
+                  </span>
+                </div>
+                <div className="provider-badges">
+                  <span className="blue-badge">
+                    <img src={asset("icon-verified.svg")} alt="" aria-hidden="true" />
+                    본인확인 완료
+                  </span>
+                  <span>운영검토 완료</span>
+                </div>
+              </div>
+              <div className="provider-stats">
+                <div>
+                  <span>완료 횟수</span>
+                  <strong>12회</strong>
+                </div>
+                <div>
+                  <span>후기</span>
+                  <strong>8개</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section className="quick-action-grid" aria-label="빠른 실행">
+          <button className="quick-action-card is-dashed" type="button" onClick={onStartRequest}>
+            <span className="action-icon" aria-hidden="true">
+              <img src={asset("icon-plus.svg")} alt="" />
+            </span>
+            <strong>새로운 도움 요청</strong>
+          </button>
+          <button className="quick-action-card" type="button" onClick={onOpenMatch}>
+            <span className="action-icon" aria-hidden="true">
+              <img src={asset("icon-history.svg")} alt="" />
+            </span>
+            <strong>최근 이용 기록</strong>
+          </button>
+        </section>
+
+        <section className="recent-section" aria-labelledby="recent-provider-title">
+          <h2 id="recent-provider-title">최근 만난 가치이웃</h2>
+          <article className="recent-provider-card">
+            <div className="recent-provider-info">
+              <div className="provider-face">
+                <img src={asset("provider-kim.png")} alt="" />
+              </div>
+              <div>
+                <strong>김민석</strong>
+                <span>지난 주 화요일 이용</span>
+              </div>
+            </div>
+            <button type="button" onClick={onStartRequest}>다시 요청하기</button>
+          </article>
+        </section>
       </div>
 
-      <ul className="feature-list" aria-label="서비스 특징">
-        {featureItems.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      <button className="floating-chat" type="button" onClick={onOpenChat} aria-label="채팅하기">
+        <img src={asset("icon-fab-chat.svg")} alt="" aria-hidden="true" />
+      </button>
+
+      <nav className="bottom-nav" aria-label="하단 메뉴">
+        <a className="is-active" href="#top">
+          <span aria-hidden="true"><img src={asset("icon-home.svg")} alt="" /></span>
+          홈
+        </a>
+        <button type="button" onClick={onOpenSearch}>
+          <span aria-hidden="true"><img src={asset("icon-search.svg")} alt="" /></span>
+          검색
+        </button>
+        <button type="button" onClick={onOpenMatch}>
+          <span aria-hidden="true"><img src={asset("icon-match.svg")} alt="" /></span>
+          매칭현황
+        </button>
+        <button type="button" onClick={onOpenProfile}>
+          <span aria-hidden="true"><img src={asset("icon-user.svg")} alt="" /></span>
+          내 정보
+        </button>
+      </nav>
     </section>
   );
 }

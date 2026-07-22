@@ -1,2 +1,2 @@
-export const SERVICE_NAME = "이음케어";
-export const SERVICE_NAME_EN = "IeumCare";
+export const SERVICE_NAME = "가치이음";
+export const SERVICE_NAME_EN = "GachiIeum";

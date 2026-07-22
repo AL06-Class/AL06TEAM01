@@ -24,13 +24,13 @@ export function MessagePanel({ messages, onSendMessage }: MessagePanelProps) {
     <section className="section-card compact-card" id="messages" aria-labelledby="message-panel-title">
       <div className="section-card-header">
         <p className="section-kicker">메시지 / 소통</p>
-        <h2 id="message-panel-title">제공자와 대화</h2>
+        <h2 id="message-panel-title">가치이웃과 대화</h2>
       </div>
 
       <div className="message-list" aria-label="메시지 목록">
         {messages.map((message) => (
           <article className={`message-bubble ${message.sender}`} key={message.id}>
-            <span>{message.sender === "provider" ? "제공자" : "신청자"}</span>
+            <span>{message.sender === "helper" ? "가치이웃" : "보호자"}</span>
             <p>{message.content}</p>
             {message.time && <time>{message.time}</time>}
           </article>
