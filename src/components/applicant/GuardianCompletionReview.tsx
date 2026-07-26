@@ -107,7 +107,7 @@ export function GuardianCompletionReview({
         </button>
       </section>
 
-      <nav className="completion-bottom-actions completion-inline-actions" aria-label="완료 화면 작업">
+      <nav className="completion-bottom-actions completion-actions-above-nav" aria-label="완료 화면 작업">
         <button type="button" onClick={onRequestAgain}>
           다시 요청
         </button>

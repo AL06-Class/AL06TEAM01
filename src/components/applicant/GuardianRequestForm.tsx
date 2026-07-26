@@ -117,11 +117,11 @@ export function GuardianRequestForm({
           <img src={asset("icon-home.svg")} alt="" aria-hidden="true" />
           홈
         </button>
-        <button type="button" onClick={onBackSearch}>
+        <button className="is-active" type="button" onClick={onBackSearch}>
           <img src={asset("icon-search.svg")} alt="" aria-hidden="true" />
           검색
         </button>
-        <button className="is-active" type="button" onClick={onOpenMatch}>
+        <button type="button" onClick={onOpenMatch}>
           <img src={asset("icon-match.svg")} alt="" aria-hidden="true" />
           매칭현황
         </button>

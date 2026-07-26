@@ -1467,7 +1467,7 @@ textarea {
 .guardian-home {
   position: relative;
   max-width: 420px;
-  min-height: 1190px;
+  min-height: 100vh;
   margin: 0 auto;
   padding-bottom: 96px;
   overflow-x: hidden;
@@ -2024,10 +2024,10 @@ textarea {
 }
 
 .floating-chat {
-  position: absolute;
-  right: 20px;
+  position: fixed;
+  right: calc(50% - 190px);
   bottom: 96px;
-  z-index: 2;
+  z-index: 5;
   display: grid;
   place-items: center;
   width: 56px;
@@ -2045,10 +2045,10 @@ textarea {
 }
 
 .bottom-nav {
-  position: absolute;
-  right: 0;
+  position: fixed;
+  right: calc(50% - 210px);
   bottom: 0;
-  left: 0;
+  left: calc(50% - 210px);
   z-index: 4;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2097,15 +2097,25 @@ textarea {
   background: #c0e9d0;
 }
 
-.guardian-search {
+.guardian-search,
+.guardian-request,
+.guardian-status,
+.guardian-schedule,
+.guardian-chat,
+.guardian-progress,
+.guardian-completion,
+.guardian-profile {
   width: 100%;
   max-width: 420px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 20px 96px;
   background: #fbf9f6;
   color: #20231f;
   box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+}
+
+.guardian-search {
+  padding: 0 20px 96px;
 }
 
 .search-context-label {
@@ -2113,6 +2123,14 @@ textarea {
   color: #adb3ad;
   font-size: 12px;
   font-weight: 800;
+}
+
+.guardian-request .search-context-label,
+.guardian-status .search-context-label,
+.guardian-chat .search-context-label,
+.guardian-progress .search-context-label,
+.guardian-completion .search-context-label {
+  display: none;
 }
 
 .guardian-search-header {
@@ -2436,14 +2454,7 @@ textarea {
 }
 
 .guardian-request {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 232px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 232px;
 }
 
 .guardian-request-copy {
@@ -2547,6 +2558,7 @@ textarea {
 }
 
 .guardian-request-form textarea {
+  height: 112px;
   padding: 13px;
   line-height: 1.55;
   resize: vertical;
@@ -2564,6 +2576,10 @@ textarea {
   border-radius: 13px;
   background: #e5f3ea;
   color: #416652;
+}
+
+.guardian-request .request-consent-note {
+  margin-top: 82px;
 }
 
 .request-consent-note strong {
@@ -2598,33 +2614,17 @@ textarea {
 }
 
 .status-inline-submit {
-  position: static;
-  width: 100%;
-  margin-top: 16px;
+  bottom: 84px;
   box-shadow: 0 12px 24px rgba(0, 52, 52, 0.14);
 }
 
 .progress-inline-submit {
-  position: static;
-  width: 100%;
-  margin-top: 16px;
+  bottom: 84px;
   box-shadow: 0 12px 24px rgba(0, 52, 52, 0.14);
 }
 
-.guardian-status .status-inline-submit,
-.guardian-progress .progress-inline-submit {
-  width: 100%;
-}
-
 .guardian-status {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 212px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 212px;
 }
 
 .request-status-hero {
@@ -2818,14 +2818,7 @@ textarea {
 }
 
 .guardian-schedule {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 188px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 188px;
 }
 
 .schedule-confirmed-card {
@@ -3072,7 +3065,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  margin: -10px -20px 0;
+  margin: 0 -20px;
   padding: 0 20px;
   border-bottom: 1px solid #e7e4df;
   background: #fbf9f6;
@@ -3193,7 +3186,7 @@ textarea {
 }
 
 .match-current-card p {
-  margin: -10px 0 0;
+  margin: -4px 0 0;
 }
 
 .match-partner-strip {
@@ -3338,14 +3331,7 @@ textarea {
 }
 
 .guardian-chat {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 174px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 174px;
 }
 
 .chat-provider-header {
@@ -3528,14 +3514,7 @@ textarea {
 }
 
 .guardian-progress {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 202px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 202px;
 }
 
 .progress-hero-card {
@@ -3683,14 +3662,7 @@ textarea {
 }
 
 .guardian-completion {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 174px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 174px;
 }
 
 .completion-hero-card {
@@ -3863,13 +3835,7 @@ textarea {
 }
 
 .completion-actions-above-nav {
-  bottom: 82px;
-}
-
-.completion-inline-actions {
-  position: static;
-  width: 100%;
-  margin-top: 16px;
+  bottom: 84px;
 }
 
 .completion-bottom-actions button {
@@ -3893,14 +3859,7 @@ textarea {
 }
 
 .guardian-profile {
-  width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 10px 20px 148px;
-  background: #f7f7f5;
-  color: #20231f;
-  box-shadow: 0 24px 70px rgba(17, 29, 19, 0.1);
+  padding: 0 20px 148px;
 }
 
 .profile-hero-card,
@@ -4187,6 +4146,16 @@ textarea {
     right: 20px;
     left: 20px;
     width: calc(100% - 40px);
+  }
+
+  .bottom-nav {
+    right: 0;
+    left: 0;
+    width: auto;
+  }
+
+  .floating-chat {
+    right: 20px;
   }
 
   .guardian-request-submit {
