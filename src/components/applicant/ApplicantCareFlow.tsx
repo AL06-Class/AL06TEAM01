@@ -5,15 +5,20 @@ import { GuardianChat } from "./GuardianChat";
 import { GuardianCompletionReview } from "./GuardianCompletionReview";
 import { GuardianProgressReport } from "./GuardianProgressReport";
 import { GuardianProfile } from "./GuardianProfile";
+import { GuardianProviderDetail } from "./GuardianProviderDetail";
 import { GuardianProviderSearch } from "./GuardianProviderSearch";
+import { GuardianRequestConfirm } from "./GuardianRequestConfirm";
 import { GuardianRequestForm } from "./GuardianRequestForm";
 import { GuardianRequestStatus } from "./GuardianRequestStatus";
 import { GuardianScheduleStatus } from "./GuardianScheduleStatus";
 
 export function ApplicantCareFlow() {
   const [activeScreen, setActiveScreen] = useState<
-    "home" | "search" | "request" | "status" | "schedule" | "chat" | "progress" | "completion" | "profile"
+    "home" | "search" | "providerDetail" | "request" | "confirm" | "status" | "schedule" | "chat" | "progress" | "completion" | "profile"
   >("home");
+  const [isRequestSearch, setIsRequestSearch] = useState(false);
+  const [directRequestHelperId, setDirectRequestHelperId] = useState("");
+  const [directRequestSubmitLabel, setDirectRequestSubmitLabel] = useState("");
   const {
     careRequest,
     onCareRequestChange,
@@ -29,11 +34,56 @@ export function ApplicantCareFlow() {
   } = useApplicantCareFlow();
 
   const openRequestFlow = () => {
+    setDirectRequestHelperId("");
+    setDirectRequestSubmitLabel("");
     setActiveScreen("request");
   };
 
+  const openRepeatRequestFlow = (helperId: string) => {
+    onSelectHelper(helperId);
+    setDirectRequestHelperId(helperId);
+    setDirectRequestSubmitLabel("다시 요청하기");
+    setIsRequestSearch(false);
+    setActiveScreen("request");
+  };
+
+  const openSelectedHelperRequestFlow = () => {
+    setDirectRequestHelperId(selectedHelperId);
+    setDirectRequestSubmitLabel("도움 요청하기");
+    setIsRequestSearch(false);
+    setActiveScreen("request");
+  };
+
+  const openHomeMatchedDetail = () => {
+    onSelectHelper("provider-minseok");
+    setActiveScreen("providerDetail");
+  };
+
   const submitRequestFlow = () => {
+    if (directRequestHelperId) {
+      setActiveScreen("confirm");
+      return;
+    }
+
     onFindHelpers();
+    setIsRequestSearch(true);
+    setActiveScreen("search");
+  };
+
+  const submitSelectedHelperRequest = () => {
+    if (isRequestSearch) {
+      setActiveScreen("confirm");
+      return;
+    }
+
+    openSelectedHelperRequestFlow();
+  };
+
+  const sendConfirmedRequest = () => {
+    onFindHelpers();
+    setDirectRequestHelperId("");
+    setDirectRequestSubmitLabel("");
+    setIsRequestSearch(false);
     setActiveScreen("status");
   };
 
@@ -69,31 +119,55 @@ export function ApplicantCareFlow() {
       {activeScreen === "home" ? (
         <ApplicantMainHero
           onStartRequest={openRequestFlow}
-          onOpenSearch={() => setActiveScreen("search")}
+          onOpenSearch={() => {
+            setIsRequestSearch(false);
+            setActiveScreen("search");
+          }}
           onOpenMatch={() => setActiveScreen("schedule")}
+          onOpenMatchedDetail={openHomeMatchedDetail}
           onOpenChat={() => setActiveScreen("chat")}
           onOpenProfile={() => setActiveScreen("profile")}
         />
       ) : activeScreen === "search" ? (
         <GuardianProviderSearch
           helpers={helpers}
+          isRequestSearch={isRequestSearch}
           selectedHelperId={selectedHelperId}
           onSelectHelper={onSelectHelper}
-          onBackHome={() => setActiveScreen("home")}
+          onOpenHelperDetail={() => setActiveScreen("providerDetail")}
+          onBackHome={() => {
+            setIsRequestSearch(false);
+            setActiveScreen("home");
+          }}
           onOpenMatch={() => setActiveScreen("schedule")}
           onOpenProfile={() => setActiveScreen("profile")}
           onStartRequest={openRequestFlow}
         />
+      ) : activeScreen === "providerDetail" ? (
+        <GuardianProviderDetail
+          selectedHelper={selectedHelper}
+          onBackSearch={() => setActiveScreen("search")}
+          onOpenChat={() => setActiveScreen("chat")}
+          onStartRequest={submitSelectedHelperRequest}
+        />
       ) : activeScreen === "request" ? (
         <GuardianRequestForm
           careRequest={careRequest}
-          selectedHelper={selectedHelper}
+          selectedHelper={directRequestHelperId ? selectedHelper : undefined}
+          submitLabel={directRequestSubmitLabel || undefined}
           onChange={onCareRequestChange}
           onGoHome={() => setActiveScreen("home")}
           onBackSearch={() => setActiveScreen("search")}
           onOpenMatch={() => setActiveScreen("schedule")}
           onOpenProfile={() => setActiveScreen("profile")}
           onSubmitRequest={submitRequestFlow}
+        />
+      ) : activeScreen === "confirm" ? (
+        <GuardianRequestConfirm
+          careRequest={careRequest}
+          selectedHelper={selectedHelper}
+          onBack={() => setActiveScreen(directRequestHelperId ? "request" : "providerDetail")}
+          onSubmit={sendConfirmedRequest}
         />
       ) : activeScreen === "status" ? (
         <GuardianRequestStatus
@@ -115,6 +189,7 @@ export function ApplicantCareFlow() {
           onOpenSearch={() => setActiveScreen("search")}
           onOpenChat={() => setActiveScreen("chat")}
           onOpenProfile={() => setActiveScreen("profile")}
+          onRepeatRequest={openRepeatRequestFlow}
         />
       ) : activeScreen === "chat" ? (
         <GuardianChat

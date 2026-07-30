@@ -1,10 +1,10 @@
-import { SERVICE_NAME } from "../../constants";
 import type { CareRequest } from "../../types/careRequest";
 import type { Helper } from "../../types/helper";
 
 type GuardianRequestFormProps = {
   careRequest: CareRequest;
   selectedHelper?: Helper;
+  submitLabel?: string;
   onChange: (field: keyof CareRequest, value: string) => void;
   onGoHome: () => void;
   onBackSearch: () => void;
@@ -13,123 +13,142 @@ type GuardianRequestFormProps = {
   onSubmitRequest: () => void;
 };
 
-const formatPrice = (price?: number) => (price ? `${price.toLocaleString("ko-KR")}원` : "-");
+const helpTypes = ["장보기", "병원 동행", "말벗", "디지털 기기 교육", "짐 옮기기"];
 
 export function GuardianRequestForm({
   careRequest,
   selectedHelper,
+  submitLabel,
   onChange,
-  onGoHome,
   onBackSearch,
-  onOpenMatch,
-  onOpenProfile,
   onSubmitRequest
 }: GuardianRequestFormProps) {
   const asset = (name: string) => `/figma-assets/${name}`;
+  const isOtherSelected = !helpTypes.includes(careRequest.careType);
 
   return (
-    <section className="guardian-request" aria-labelledby="guardian-request-title">
-      <p className="search-context-label">도움 요청 작성</p>
-
-      <header className="guardian-search-header">
+    <section className="guardian-request request-write-page" aria-labelledby="guardian-request-title">
+      <header className="request-write-header">
         <button className="search-back-button" type="button" onClick={onBackSearch} aria-label="검색으로 돌아가기">
-          ←
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M15 18L9 12L15 6" />
+          </svg>
         </button>
-        <strong>{SERVICE_NAME}</strong>
-        <button className="search-bell-button" type="button" aria-label="알림">
-          <img src={asset("icon-bell.svg")} alt="" aria-hidden="true" />
-        </button>
+        <h1>도움 요청하기</h1>
       </header>
 
-      <div className="guardian-request-copy">
-        <h1 id="guardian-request-title">어떤 도움이 필요하신가요?</h1>
-        <p>선택한 가치이웃이 확인할 수 있도록 필요한 내용만 차분히 적어주세요.</p>
-      </div>
+      <main className="request-write-main">
+        <section className="request-write-hero" aria-labelledby="guardian-request-title">
+          <h2 id="guardian-request-title">
+            이웃에게 도움을
+            <br />
+            요청해보세요.
+          </h2>
+          <p>믿을 수 있는 '가치이웃'들이 기다리고 있습니다.</p>
+        </section>
 
-      {selectedHelper && (
-        <article className="selected-provider-strip" aria-label="선택한 가치이웃">
-          <img src={selectedHelper.imageUrl} alt="" />
-          <div>
-            <span>선택한 가치이웃</span>
-            <strong>{selectedHelper.name}</strong>
-            <p>★ {selectedHelper.rating.toFixed(1)} · {selectedHelper.distance}</p>
-          </div>
-          <b>{formatPrice(selectedHelper.price)}<small>/시간</small></b>
-        </article>
-      )}
+        <form className="request-write-form">
+          {selectedHelper && (
+            <section className="request-target-helper" aria-label="다시 요청할 가치제공자">
+              <img src={selectedHelper.imageUrl} alt="" />
+              <div>
+                <span>다시 요청할 가치제공자</span>
+                <strong>{selectedHelper.name}</strong>
+                <p>{selectedHelper.distance} · ★ {selectedHelper.rating.toFixed(1)}</p>
+              </div>
+            </section>
+          )}
 
-      <form className="guardian-request-form">
-        <label>
-          <span>도움 유형</span>
-          <select value={careRequest.careType} onChange={(event) => onChange("careType", event.target.value)}>
-            <option value="장보기 동행">장보기 동행</option>
-            <option value="디지털 기기 도움">디지털 기기 도움</option>
-            <option value="관공서 동행">관공서 동행</option>
-            <option value="산책/운동 동행">산책/운동 동행</option>
-          </select>
-        </label>
+          <section className="request-write-card" aria-labelledby="help-type-title">
+            <h2 id="help-type-title">어떤 도움이 필요하신가요?</h2>
+            <div className="request-chip-list">
+              {helpTypes.map((helpType) => (
+                <button
+                  className={careRequest.careType === helpType ? "is-selected" : ""}
+                  key={helpType}
+                  type="button"
+                  onClick={() => onChange("careType", helpType)}
+                >
+                  {helpType}
+                </button>
+              ))}
+              <button
+                className={isOtherSelected ? "is-selected" : ""}
+                type="button"
+                onClick={() => onChange("careType", isOtherSelected ? careRequest.careType : "기타")}
+              >
+                  기타
+              </button>
+            </div>
+            {isOtherSelected && (
+              <label className="request-other-field">
+                <span>필요한 도움을 직접 입력해주세요.</span>
+                <input
+                  aria-label="기타 도움 내용"
+                  value={careRequest.careType === "기타" ? "" : careRequest.careType}
+                  onChange={(event) => onChange("careType", event.target.value || "기타")}
+                  placeholder="예: 가전제품 사용법 알려주세요"
+                />
+              </label>
+            )}
+          </section>
 
-        <div className="request-two-column">
-          <label>
-            <span>날짜</span>
-            <input type="date" value={careRequest.date} onChange={(event) => onChange("date", event.target.value)} />
-          </label>
-          <label>
-            <span>시간</span>
-            <select value={careRequest.time} onChange={(event) => onChange("time", event.target.value)}>
-              <option value="09:00-12:00">오전 9시-12시</option>
-              <option value="13:00-16:00">오후 1시-4시</option>
-              <option value="17:00-20:00">오후 5시-8시</option>
-            </select>
-          </label>
-        </div>
+          <section className="request-write-card" aria-labelledby="visit-time-title">
+            <h2 id="visit-time-title">언제 방문할까요?</h2>
+            <label className="request-input-field">
+              <span>방문 날짜</span>
+              <input type="date" value={careRequest.date} onChange={(event) => onChange("date", event.target.value)} />
+            </label>
+            <label className="request-input-field">
+              <span>방문 시간</span>
+              <input type="time" value={careRequest.time.split("-")[0] || ""} onChange={(event) => onChange("time", event.target.value)} />
+            </label>
+          </section>
 
-        <label>
-          <span>도움 장소</span>
-          <input
-            value={careRequest.region}
-            onChange={(event) => onChange("region", event.target.value)}
-            placeholder="예: 제주시 조천읍"
-          />
-        </label>
+          <section className="request-write-card" aria-labelledby="visit-location-title">
+            <h2 id="visit-location-title">어디로 방문할까요?</h2>
+            <div className="request-location-row">
+              <input
+                aria-label="방문 주소"
+                value={careRequest.region}
+                onChange={(event) => onChange("region", event.target.value)}
+                placeholder="제주시 조천읍"
+              />
+              <button type="button">위치 찾기</button>
+            </div>
+            <input
+              className="request-detail-address"
+              aria-label="상세 주소"
+              placeholder="상세 주소를 입력해주세요 (예: 101동 202호)"
+            />
+            <div className="request-map-preview" aria-hidden="true">
+              <img className="request-map-image" src={asset("request-map.png")} alt="" />
+              <img className="request-map-pin" src={asset("request-map-pin.png")} alt="" />
+            </div>
+          </section>
 
-        <label>
-          <span>요청 메모</span>
-          <textarea
-            rows={5}
-            value={careRequest.requestNote}
-            onChange={(event) => onChange("requestNote", event.target.value)}
-            placeholder="예: 어머니가 천천히 걷습니다. 장보기 후 집 앞까지 동행해 주세요."
-          />
-        </label>
-      </form>
+          <section className="request-write-card" aria-labelledby="request-note-title">
+            <h2 id="request-note-title">요청 메모</h2>
+            <textarea
+              value={careRequest.requestNote}
+              onChange={(event) => onChange("requestNote", event.target.value)}
+              placeholder="도움이 필요한 내용을 자세히 적어주시면 더 적합한 이웃을 추천해드릴 수 있어요. (예: 거동이 조금 불편하십니다.)"
+            />
+          </section>
 
-      <div className="request-consent-note">
-        <strong>안전 안내</strong>
-        <p>부모님 동의와 필요한 정보 제공 범위는 요청 확정 전에 다시 확인합니다.</p>
-      </div>
+          <aside className="request-trust-hint">
+            <img src={asset("request-shield-icon.png")} alt="" aria-hidden="true" />
+            <p>모든 가치이웃은 본인 인증 및 범죄 경력 조회가 완료된 신뢰할 수 있는 분들입니다. 걱정 마시고 도움을 요청하세요.</p>
+          </aside>
+        </form>
+      </main>
 
-      <button className="guardian-request-submit request-submit-above-nav" type="button" onClick={onSubmitRequest}>
-        요청 내용 확인하기
-      </button>
-      <nav className="search-bottom-nav request-bottom-nav" aria-label="하단 메뉴">
-        <button type="button" onClick={onGoHome}>
-          <img src={asset("icon-home.svg")} alt="" aria-hidden="true" />
-          홈
+      <footer className="request-write-footer">
+        <button type="button" onClick={onSubmitRequest}>
+          {submitLabel || "조건에 맞는 가치이웃 찾기"}
+          <img src={asset("request-arrow-right.png")} alt="" aria-hidden="true" />
         </button>
-        <button className="is-active" type="button" onClick={onBackSearch}>
-          <img src={asset("icon-search.svg")} alt="" aria-hidden="true" />
-          검색
-        </button>
-        <button type="button" onClick={onOpenMatch}>
-          <img src={asset("icon-match.svg")} alt="" aria-hidden="true" />
-          매칭현황
-        </button>
-        <button type="button" onClick={onOpenProfile}>
-          <img src={asset("icon-user.svg")} alt="" aria-hidden="true" />
-          내 정보
-        </button>
-      </nav>
+      </footer>
     </section>
   );
 }

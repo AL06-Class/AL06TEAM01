@@ -1,6 +1,7 @@
 import { SERVICE_NAME } from "../../constants";
 import type { CareRequest } from "../../types/careRequest";
 import type { Helper } from "../../types/helper";
+import { NotificationBell } from "./NotificationBell";
 
 type GuardianRequestStatusProps = {
   careRequest: CareRequest;
@@ -33,12 +34,12 @@ export function GuardianRequestStatus({
 
       <header className="guardian-search-header">
         <button className="search-back-button" type="button" onClick={onBackRequest} aria-label="요청 작성으로 돌아가기">
-          ←
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M15 18L9 12L15 6" />
+          </svg>
         </button>
         <strong>{SERVICE_NAME}</strong>
-        <button className="search-bell-button" type="button" aria-label="알림">
-          <img src={asset("icon-bell.svg")} alt="" aria-hidden="true" />
-        </button>
+        <NotificationBell onOpenMatch={onOpenSchedule} />
       </header>
 
       <div className="request-status-hero">
@@ -115,7 +116,7 @@ export function GuardianRequestStatus({
 
       <nav className="search-bottom-nav status-bottom-nav" aria-label="하단 메뉴">
         <button type="button" onClick={onGoHome}>
-          <img src={asset("icon-home.svg")} alt="" aria-hidden="true" />
+          <img src={asset("icon-home-stroke.svg")} alt="" aria-hidden="true" />
           홈
         </button>
         <button type="button" onClick={onOpenSearch}>
@@ -123,7 +124,7 @@ export function GuardianRequestStatus({
           검색
         </button>
         <button className="is-active" type="button" onClick={onOpenMatch}>
-          <img src={asset("icon-match.svg")} alt="" aria-hidden="true" />
+          <img className="nav-match-icon" src={asset("icon-match-nav-source.png")} alt="" aria-hidden="true" />
           매칭현황
         </button>
         <button type="button" onClick={onOpenProfile}>

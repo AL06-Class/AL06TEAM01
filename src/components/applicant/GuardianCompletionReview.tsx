@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SERVICE_NAME } from "../../constants";
 import type { CareRequest } from "../../types/careRequest";
 import type { Helper } from "../../types/helper";
+import { NotificationBell } from "./NotificationBell";
 
 type GuardianCompletionReviewProps = {
   careRequest: CareRequest;
@@ -47,12 +48,12 @@ export function GuardianCompletionReview({
 
       <header className="guardian-search-header">
         <button className="search-back-button" type="button" onClick={onBackProgress} aria-label="진행 리포트로 돌아가기">
-          ←
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M15 18L9 12L15 6" />
+          </svg>
         </button>
         <strong>{SERVICE_NAME}</strong>
-        <button className="search-bell-button" type="button" aria-label="알림">
-          <img src={asset("icon-bell.svg")} alt="" aria-hidden="true" />
-        </button>
+        <NotificationBell onOpenMatch={onOpenMatch} />
       </header>
 
       <section className="completion-hero-card" aria-labelledby="guardian-completion-title">
@@ -118,7 +119,7 @@ export function GuardianCompletionReview({
 
       <nav className="search-bottom-nav completion-bottom-nav" aria-label="하단 메뉴">
         <button type="button" onClick={onGoHome}>
-          <img src={asset("icon-home.svg")} alt="" aria-hidden="true" />
+          <img src={asset("icon-home-stroke.svg")} alt="" aria-hidden="true" />
           홈
         </button>
         <button type="button" onClick={onOpenSearch}>
@@ -126,7 +127,7 @@ export function GuardianCompletionReview({
           검색
         </button>
         <button className="is-active" type="button" onClick={onOpenMatch}>
-          <img src={asset("icon-match.svg")} alt="" aria-hidden="true" />
+          <img className="nav-match-icon" src={asset("icon-match-nav-source.png")} alt="" aria-hidden="true" />
           매칭현황
         </button>
         <button type="button" onClick={onOpenProfile}>
