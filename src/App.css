@@ -1,4 +1,149 @@
 :root {
+  --common-gateway-shadow: 0 24px 60px rgba(17, 29, 19, 0.12);
+}
+
+.common-gateway {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  background: #f7f9f7;
+  color: #111d13;
+}
+
+.common-gateway-panel {
+  display: grid;
+  gap: 28px;
+  width: min(100%, 420px);
+  padding: 28px 20px;
+  border: 1px solid rgba(112, 151, 117, 0.22);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--common-gateway-shadow);
+}
+
+.common-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #415d43;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.common-brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 999px;
+  background: #c0e9d0;
+  color: #003434;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.common-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.common-copy p,
+.common-role-card em {
+  margin: 0;
+  color: #416652;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.common-copy h1 {
+  margin: 0;
+  color: #111d13;
+  font-size: 30px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.common-copy span {
+  color: #5c6b5e;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.common-role-list {
+  display: grid;
+  gap: 12px;
+}
+
+.common-role-card {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 4px 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 118px;
+  padding: 16px;
+  border: 1px solid rgba(112, 151, 117, 0.24);
+  border-radius: 16px;
+  background: #fbfdfb;
+  color: #111d13;
+  text-align: left;
+}
+
+.common-role-card:hover {
+  border-color: #709775;
+  background: #f7f9f7;
+}
+
+.common-role-icon {
+  display: grid;
+  grid-row: span 3;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border-radius: 18px;
+  background: #e5f2eb;
+  color: #415d43;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.common-role-icon.provider {
+  background: #c0e9d0;
+  color: #003434;
+}
+
+.common-role-card strong {
+  align-self: end;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.common-role-card p {
+  margin: 0;
+  color: #5c6b5e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .common-gateway {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .common-gateway-panel {
+    width: 100%;
+    min-height: 100vh;
+    align-content: center;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+:root {
   --color-primary: #709775;
   --color-primary-line: #8fb996;
   --color-surface-light: #f7f9f7;
