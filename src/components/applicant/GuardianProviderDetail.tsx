@@ -5,6 +5,7 @@ type GuardianProviderDetailProps = {
   selectedHelper?: Helper;
   onBackSearch: () => void;
   onOpenChat: () => void;
+  onOpenReview: () => void;
   onStartRequest: () => void;
 };
 
@@ -52,7 +53,7 @@ const detailContentByHelperId: Record<string, ProviderDetailContent> = {
         icon: "helper-history-phone.png",
         title: "스마트폰 영상통화 교육",
         body: "카카오톡, 영상통화, 사진 전송 방법을 반복 안내",
-        rate: "추천율 100%"
+        rate: "만족도 100%"
       },
       {
         icon: "helper-history-box.png",
@@ -88,7 +89,7 @@ const detailContentByHelperId: Record<string, ProviderDetailContent> = {
         icon: "helper-history-phone.png",
         title: "병원 접수 및 약국 동행",
         body: "제주시 병원 접수, 수납, 약 수령 과정을 함께 진행",
-        rate: "추천율 98%"
+        rate: "만족도 98%"
       },
       {
         icon: "helper-history-box.png",
@@ -124,7 +125,7 @@ const detailContentByHelperId: Record<string, ProviderDetailContent> = {
         icon: "helper-history-box.png",
         title: "무거운 짐 이동 보조",
         body: "쌀, 생수, 소형 가구 이동과 실내 배치 보조",
-        rate: "추천율 96%"
+        rate: "만족도 96%"
       },
       {
         icon: "helper-history-phone.png",
@@ -160,7 +161,7 @@ const detailContentByHelperId: Record<string, ProviderDetailContent> = {
         icon: "helper-history-phone.png",
         title: "온라인 예약 및 민원 안내",
         body: "병원 예약, 관공서 방문 전 준비 서류 확인",
-        rate: "추천율 99%"
+        rate: "만족도 99%"
       },
       {
         icon: "helper-history-box.png",
@@ -196,7 +197,7 @@ const detailContentByHelperId: Record<string, ProviderDetailContent> = {
         icon: "helper-history-phone.png",
         title: "해안 산책 동행",
         body: "애월 인근 산책로 동행과 휴식 시간 관리",
-        rate: "추천율 97%"
+        rate: "만족도 97%"
       },
       {
         icon: "helper-history-box.png",
@@ -226,9 +227,11 @@ export function GuardianProviderDetail({
   selectedHelper,
   onBackSearch,
   onOpenChat,
+  onOpenReview,
   onStartRequest
 }: GuardianProviderDetailProps) {
   const [shareMessage, setShareMessage] = useState("");
+  const [isReviewExpanded, setIsReviewExpanded] = useState(false);
   const asset = (name: string) => `/figma-assets/${name}`;
   const helperName = selectedHelper?.name && !selectedHelper.name.includes("�") ? selectedHelper.name : "김지연";
   const profileImage = selectedHelper?.imageUrl || asset("helper-detail-profile.png");
@@ -242,10 +245,26 @@ export function GuardianProviderDetail({
         ? asset("helper-intro-haneul.mp4")
         : selectedHelper?.id === "provider-choi"
           ? asset("helper-intro-sungho.mp4")
+          : selectedHelper?.id === "provider-park"
+            ? asset("helper-intro-seoyoon.mp4")
           : "";
   const completedCount = `${(selectedHelper?.completedCount || 91).toLocaleString("ko-KR")}건`;
   const rating = (selectedHelper?.rating || 4.9).toFixed(1);
   const reviewCount = selectedHelper?.reviewCount || content.reviews.length;
+  const detailReviews = [
+    ...content.reviews,
+    {
+      name: "박정* (보호자)",
+      meta: "2024.03.18 · 생활 도움",
+      content: `${helperName}님이 약속 시간을 잘 지켜주시고 진행 상황을 차분히 알려주셔서 안심할 수 있었습니다.`
+    },
+    {
+      name: "한복* (본인)",
+      meta: "2024.03.09 · 동행 도움",
+      content: "말을 천천히 해주고 필요한 내용을 다시 확인해줘서 편하게 도움을 받을 수 있었습니다."
+    }
+  ];
+  const visibleReviews = isReviewExpanded ? detailReviews : detailReviews.slice(0, 2);
   const stats = [
     ["매칭 완료", completedCount, ""],
     ["재매칭 비율", content.matchRate, "is-green"],
@@ -388,9 +407,14 @@ export function GuardianProviderDetail({
         <section className="detail-section detail-review-section" aria-labelledby="review-title">
           <div className="detail-section-title-row">
             <h2 id="review-title">이용자 후기 <span>({reviewCount})</span></h2>
-            <button type="button">전체보기</button>
+            <div className="detail-review-actions">
+              <button type="button" onClick={() => setIsReviewExpanded((current) => !current)}>
+                {isReviewExpanded ? "접기" : "전체보기"}
+              </button>
+              <button type="button" onClick={onOpenReview}>후기 쓰기</button>
+            </div>
           </div>
-          {content.reviews.map((review, index) => (
+          {visibleReviews.map((review, index) => (
             <article className="detail-review-card" key={review.name}>
               <div className="detail-review-head">
                 <div className="detail-review-user">

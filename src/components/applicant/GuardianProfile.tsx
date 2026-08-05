@@ -1,10 +1,17 @@
 import { useState } from "react";
+import type { GuardianParentInfo, GuardianProfileInfo } from "./ApplicantCareFlow";
 import { NotificationBell } from "./NotificationBell";
 
 type GuardianProfileProps = {
+  profileInfo: GuardianProfileInfo;
+  onProfileInfoChange: (profileInfo: GuardianProfileInfo) => void;
+  parentInfo: GuardianParentInfo;
+  onParentInfoChange: (parentInfo: GuardianParentInfo) => void;
   onGoHome: () => void;
   onOpenSearch: () => void;
   onOpenMatch: () => void;
+  onOpenChat: () => void;
+  onOpenProgress: () => void;
 };
 
 type ProfilePanel =
@@ -13,7 +20,6 @@ type ProfilePanel =
   | "payment"
   | "notification"
   | "font"
-  | "notice"
   | "faq"
   | "contact"
   | "terms"
@@ -27,24 +33,25 @@ type ProfileMenuItem = {
   helper?: string;
 };
 
-export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: GuardianProfileProps) {
+const SUPPORT_EMAIL = "help@gachi-ieum.kr";
+
+export function GuardianProfile({
+  profileInfo,
+  onProfileInfoChange,
+  parentInfo,
+  onParentInfoChange,
+  onGoHome,
+  onOpenSearch,
+  onOpenMatch,
+  onOpenChat,
+  onOpenProgress
+}: GuardianProfileProps) {
   const asset = (name: string) => `/figma-assets/${name}`;
   const [activePanel, setActivePanel] = useState<ProfilePanel>("");
   const [saveMessage, setSaveMessage] = useState("");
-  const [profileInfo, setProfileInfo] = useState({
-    name: "이민정",
-    phone: "010-1234-5678",
-    relation: "보호자"
-  });
-  const [parentInfo, setParentInfo] = useState({
-    name: "김영자",
-    relation: "어머니",
-    address: "제주시 조천읍",
-    note: "거동은 가능하지만 장거리 이동은 동행이 필요해요."
-  });
   const [paymentInfo, setPaymentInfo] = useState({
-    cardName: "신한카드",
-    cardNumber: "1234",
+    method: "결제 링크 안내",
+    phone: profileInfo.phone,
     receiptEmail: "guardian@gachi-ieum.kr"
   });
   const [notificationSettings, setNotificationSettings] = useState({
@@ -57,8 +64,17 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
   const [contactForm, setContactForm] = useState({
     category: "이용 문의",
     phone: profileInfo.phone,
+    email: "guardian@gachi-ieum.kr",
     message: ""
   });
+
+  const updateParentInfo = (field: keyof GuardianParentInfo, value: string) => {
+    onParentInfoChange({ ...parentInfo, [field]: value });
+  };
+
+  const updateProfileInfo = (field: keyof GuardianProfileInfo, value: string) => {
+    onProfileInfoChange({ ...profileInfo, [field]: value });
+  };
 
   const enabledNotificationCount = Object.values(notificationSettings).filter(Boolean).length;
   const fontSizeLabel: Record<ProfileFontSize, string> = {
@@ -76,13 +92,13 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
           label: "부모님 정보 등록/관리",
           icon: "profile-icon-parent.svg",
           action: "parent",
-          helper: `${parentInfo.name} · ${parentInfo.address}`
+          helper: `${parentInfo.name} · ${parentInfo.age}세 · ${parentInfo.address}`
         },
         {
           label: "결제 수단 관리",
           icon: "profile-icon-payment.svg",
           action: "payment",
-          helper: `${paymentInfo.cardName} **** ${paymentInfo.cardNumber}`
+          helper: paymentInfo.method
         }
       ]
     },
@@ -106,7 +122,6 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
     {
       title: "고객 지원",
       items: [
-        { label: "공지사항", icon: "profile-icon-notice.svg", action: "notice", helper: "서비스 안내 확인" },
         { label: "자주 묻는 질문", icon: "profile-icon-faq.svg", action: "faq", helper: "이용 전 궁금한 점" },
         { label: "가치이음 문의하기", icon: "profile-icon-contact.svg", action: "contact", helper: "평일 09:00-18:00" },
         { label: "약관 및 정책", icon: "profile-icon-terms.svg", action: "terms", helper: "개인정보·서비스 약관" }
@@ -120,7 +135,24 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
   };
 
   const savePanel = () => {
-    setSaveMessage(activePanel === "contact" ? "문의가 접수되었습니다" : "확인되었습니다");
+    if (activePanel === "contact") {
+      const subject = `[가치이음 문의] ${contactForm.category}`;
+      const body = [
+        `문의 유형: ${contactForm.category}`,
+        `연락받을 번호: ${contactForm.phone}`,
+        `답변 받을 이메일: ${contactForm.email}`,
+        "",
+        "문의 내용",
+        contactForm.message.trim() || "문의 내용을 입력하지 않았어요."
+      ].join("\n");
+
+      window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      setSaveMessage("이메일 앱으로 문의 내용을 열었어요.");
+      window.setTimeout(closePanel, 1200);
+      return;
+    }
+
+    setSaveMessage("확인되었습니다");
     window.setTimeout(closePanel, 700);
   };
 
@@ -135,17 +167,15 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
             ? "알림 설정"
             : activePanel === "font"
               ? "글자 크기 설정"
-              : activePanel === "notice"
-                ? "공지사항"
-                : activePanel === "faq"
-                  ? "자주 묻는 질문"
-                  : activePanel === "contact"
-                    ? "가치이음 문의하기"
-                    : "약관 및 정책";
+              : activePanel === "faq"
+                ? "자주 묻는 질문"
+                : activePanel === "contact"
+                  ? "가치이음 문의하기"
+                  : "약관 및 정책";
   const sheetActionLabel =
     activePanel === "contact"
       ? "문의 접수하기"
-      : activePanel === "notice" || activePanel === "faq" || activePanel === "terms"
+      : activePanel === "faq" || activePanel === "terms"
         ? "확인했어요"
         : "저장하기";
 
@@ -153,12 +183,12 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
     <section className={`guardian-profile profile-font-${fontSize}`} aria-labelledby="guardian-profile-title">
       <header className="profile-app-header">
         <h1 id="guardian-profile-title">내 정보 및 설정</h1>
-        <NotificationBell iconName="profile-icon-bell.svg" onOpenMatch={onOpenMatch} />
+        <NotificationBell iconName="profile-icon-bell.svg" onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       <section className="profile-guardian-card" aria-label="보호자 계정">
         <div className="profile-avatar-wrap">
-          <img src={asset("profile-user.png")} alt="" />
+          <img src={profileInfo.photoUrl || asset("profile-user.png")} alt="" />
           <span aria-hidden="true">
             <img src={asset("profile-icon-verified.svg")} alt="" />
           </span>
@@ -233,21 +263,45 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
                   이름
                   <input
                     value={profileInfo.name}
-                    onChange={(event) => setProfileInfo({ ...profileInfo, name: event.target.value })}
+                    onChange={(event) => updateProfileInfo("name", event.target.value)}
                   />
                 </label>
                 <label>
                   연락처
                   <input
                     value={profileInfo.phone}
-                    onChange={(event) => setProfileInfo({ ...profileInfo, phone: event.target.value })}
+                    onChange={(event) => updateProfileInfo("phone", event.target.value)}
                   />
                 </label>
                 <label>
                   관계
+                  <div className="profile-relation-options" role="radiogroup" aria-label="프로필 관계">
+                    {["자녀", "며느리/사위", "친척", "기타"].map((relation) => (
+                      <button
+                        className={profileInfo.relation === relation ? "is-selected" : ""}
+                        type="button"
+                        role="radio"
+                        aria-checked={profileInfo.relation === relation}
+                        key={relation}
+                        onClick={() => updateProfileInfo("relation", relation)}
+                      >
+                        {relation}
+                      </button>
+                    ))}
+                  </div>
+                </label>
+                <label>
+                  거주 지역
                   <input
-                    value={profileInfo.relation}
-                    onChange={(event) => setProfileInfo({ ...profileInfo, relation: event.target.value })}
+                    value={profileInfo.address}
+                    onChange={(event) => updateProfileInfo("address", event.target.value)}
+                  />
+                </label>
+                <label>
+                  상세 주소
+                  <input
+                    value={profileInfo.detailAddress}
+                    onChange={(event) => updateProfileInfo("detailAddress", event.target.value)}
                   />
                 </label>
               </div>
@@ -259,28 +313,54 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
                   부모님 성함
                   <input
                     value={parentInfo.name}
-                    onChange={(event) => setParentInfo({ ...parentInfo, name: event.target.value })}
+                    onChange={(event) => updateParentInfo("name", event.target.value)}
+                  />
+                </label>
+                <label>
+                  나이
+                  <input
+                    inputMode="numeric"
+                    maxLength={3}
+                    value={parentInfo.age}
+                    onChange={(event) => updateParentInfo("age", event.target.value.replace(/[^0-9]/g, ""))}
                   />
                 </label>
                 <label>
                   관계
-                  <input
-                    value={parentInfo.relation}
-                    onChange={(event) => setParentInfo({ ...parentInfo, relation: event.target.value })}
-                  />
+                  <div className="profile-relation-options" role="radiogroup" aria-label="부모님과의 관계">
+                    {["어머니", "아버지", "배우자", "기타"].map((relation) => (
+                      <button
+                        className={parentInfo.relation === relation ? "is-selected" : ""}
+                        type="button"
+                        role="radio"
+                        aria-checked={parentInfo.relation === relation}
+                        key={relation}
+                        onClick={() => updateParentInfo("relation", relation)}
+                      >
+                        {relation}
+                      </button>
+                    ))}
+                  </div>
                 </label>
                 <label>
                   거주 지역
                   <input
                     value={parentInfo.address}
-                    onChange={(event) => setParentInfo({ ...parentInfo, address: event.target.value })}
+                    onChange={(event) => updateParentInfo("address", event.target.value)}
+                  />
+                </label>
+                <label>
+                  상세 주소
+                  <input
+                    value={parentInfo.detailAddress}
+                    onChange={(event) => updateParentInfo("detailAddress", event.target.value)}
                   />
                 </label>
                 <label>
                   도움 참고사항
                   <textarea
                     value={parentInfo.note}
-                    onChange={(event) => setParentInfo({ ...parentInfo, note: event.target.value })}
+                    onChange={(event) => updateParentInfo("note", event.target.value)}
                   />
                 </label>
               </div>
@@ -288,19 +368,30 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
 
             {activePanel === "payment" && (
               <div className="profile-setting-form">
+                <div className="profile-payment-guide">
+                  <strong>카드정보는 저장하지 않아요</strong>
+                  <p>
+                    MVP에서는 도움 완료 후 결제 링크를 문자 또는 카카오톡으로 보내드려요.
+                    실제 카드번호는 PG 결제창에서만 입력합니다.
+                  </p>
+                </div>
                 <label>
-                  카드사
-                  <input
-                    value={paymentInfo.cardName}
-                    onChange={(event) => setPaymentInfo({ ...paymentInfo, cardName: event.target.value })}
-                  />
+                  결제 안내 방식
+                  <select
+                    value={paymentInfo.method}
+                    onChange={(event) => setPaymentInfo({ ...paymentInfo, method: event.target.value })}
+                  >
+                    <option>결제 링크 안내</option>
+                    <option>카카오톡 안내</option>
+                    <option>문자 안내</option>
+                    <option>계좌이체 안내</option>
+                  </select>
                 </label>
                 <label>
-                  카드 마지막 4자리
+                  결제 안내 받을 번호
                   <input
-                    maxLength={4}
-                    value={paymentInfo.cardNumber}
-                    onChange={(event) => setPaymentInfo({ ...paymentInfo, cardNumber: event.target.value })}
+                    value={paymentInfo.phone}
+                    onChange={(event) => setPaymentInfo({ ...paymentInfo, phone: event.target.value })}
                   />
                 </label>
                 <label>
@@ -393,29 +484,6 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
               </div>
             )}
 
-            {activePanel === "notice" && (
-              <div className="profile-support-list">
-                <article className="profile-support-item">
-                  <span>중요</span>
-                  <strong>안심 인증 정보 표시가 강화되었어요</strong>
-                  <p>가치이웃 상세 정보에서 본인인증, 신원인증, 법적경력 확인 상태를 더 쉽게 확인할 수 있어요.</p>
-                  <time dateTime="2026-07-29">2026.07.29</time>
-                </article>
-                <article className="profile-support-item">
-                  <span>안내</span>
-                  <strong>제주 지역 방문 요청 시간이 확대되었어요</strong>
-                  <p>조천읍, 노형동, 인화동 주변 요청 가능 시간이 저녁 8시까지 확대되었습니다.</p>
-                  <time dateTime="2026-07-22">2026.07.22</time>
-                </article>
-                <article className="profile-support-item">
-                  <span>공지</span>
-                  <strong>요청 전 확인 화면이 추가되었어요</strong>
-                  <p>도움 내용을 보내기 전에 날짜, 장소, 요청 내용을 한 번 더 확인할 수 있습니다.</p>
-                  <time dateTime="2026-07-15">2026.07.15</time>
-                </article>
-              </div>
-            )}
-
             {activePanel === "faq" && (
               <div className="profile-faq-list">
                 <details open>
@@ -459,6 +527,14 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
                   />
                 </label>
                 <label>
+                  답변 받을 이메일
+                  <input
+                    type="email"
+                    value={contactForm.email}
+                    onChange={(event) => setContactForm({ ...contactForm, email: event.target.value })}
+                  />
+                </label>
+                <label>
                   문의 내용
                   <textarea
                     placeholder="궁금한 점이나 도움이 필요한 내용을 적어주세요."
@@ -466,7 +542,7 @@ export function GuardianProfile({ onGoHome, onOpenSearch, onOpenMatch }: Guardia
                     onChange={(event) => setContactForm({ ...contactForm, message: event.target.value })}
                   />
                 </label>
-                <p className="profile-contact-note">접수 후 평일 기준 1일 이내에 연락드릴게요.</p>
+                <p className="profile-contact-note">문의 내용은 이메일로 전달돼요. 접수 후 평일 기준 1일 이내에 연락드릴게요.</p>
               </div>
             )}
 

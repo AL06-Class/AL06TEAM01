@@ -1,0 +1,18 @@
+<svg width="700" height="180" viewBox="0 0 700 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="180" fill="#DDEDE8"/>
+  <path d="M0 132C64 112 92 118 150 96C213 72 263 30 332 42C402 55 443 99 506 84C575 68 619 37 700 57V180H0V132Z" fill="#B9D9CF"/>
+  <path d="M-24 66C38 82 79 76 132 58C213 31 253 51 310 70C376 92 436 45 493 35C574 21 641 44 724 26" stroke="#79B69A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M-14 104C38 88 80 102 125 121C185 146 247 135 301 110C363 82 408 94 463 121C533 155 614 134 720 100" stroke="#8FB996" stroke-width="3" stroke-linecap="round"/>
+  <path d="M59 0V180M151 0V180M244 0V180M337 0V180M430 0V180M523 0V180M616 0V180" stroke="#C8DDD6" stroke-width="1"/>
+  <path d="M0 45H700M0 91H700M0 137H700" stroke="#C8DDD6" stroke-width="1"/>
+  <path d="M84 116L164 83L252 95L342 63L446 100L536 77L628 106" stroke="#E38B74" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M116 36L190 70L256 42L347 86L436 55L510 90L601 52" stroke="#5A91C7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g opacity="0.9">
+    <rect x="274" y="58" width="152" height="64" rx="32" fill="white"/>
+    <text x="350" y="85" text-anchor="middle" fill="#003434" font-family="Noto Sans KR, Arial, sans-serif" font-size="18" font-weight="800">Jeju</text>
+    <text x="350" y="108" text-anchor="middle" fill="#003434" font-family="Noto Sans KR, Arial, sans-serif" font-size="20" font-weight="900">제주시</text>
+  </g>
+  <circle cx="188" cy="73" r="7" fill="#61A878" stroke="white" stroke-width="3"/>
+  <circle cx="504" cy="90" r="7" fill="#61A878" stroke="white" stroke-width="3"/>
+  <circle cx="602" cy="52" r="7" fill="#61A878" stroke="white" stroke-width="3"/>
+</svg>

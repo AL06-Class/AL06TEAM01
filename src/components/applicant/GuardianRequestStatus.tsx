@@ -10,6 +10,8 @@ type GuardianRequestStatusProps = {
   onGoHome: () => void;
   onOpenSearch: () => void;
   onOpenMatch: () => void;
+  onOpenChat: () => void;
+  onOpenProgress: () => void;
   onOpenProfile: () => void;
   onOpenSchedule: () => void;
 };
@@ -23,6 +25,8 @@ export function GuardianRequestStatus({
   onGoHome,
   onOpenSearch,
   onOpenMatch,
+  onOpenChat,
+  onOpenProgress,
   onOpenProfile,
   onOpenSchedule
 }: GuardianRequestStatusProps) {
@@ -30,7 +34,7 @@ export function GuardianRequestStatus({
 
   return (
     <section className="guardian-status" aria-labelledby="guardian-status-title">
-      <p className="search-context-label">요청 확인</p>
+      <p className="search-context-label">요청 전송 완료</p>
 
       <header className="guardian-search-header">
         <button className="search-back-button" type="button" onClick={onBackRequest} aria-label="요청 작성으로 돌아가기">
@@ -39,17 +43,17 @@ export function GuardianRequestStatus({
           </svg>
         </button>
         <strong>{SERVICE_NAME}</strong>
-        <NotificationBell onOpenMatch={onOpenSchedule} />
+        <NotificationBell onOpenChat={onOpenChat} onOpenMatch={onOpenSchedule} onOpenProgress={onOpenProgress} />
       </header>
 
       <div className="request-status-hero">
-        <span>요청 전달 준비 완료</span>
+        <span>요청이 보내졌어요</span>
         <h1 id="guardian-status-title">
-          요청 내용을 확인하고
+          가치이웃의 수락을
           <br />
-          수락을 기다려요
+          기다리고 있어요
         </h1>
-        <p>가치이웃이 내용을 확인하고 수락하면 일정이 확정됩니다.</p>
+        <p>가치제공자가 요청 내용을 확인하고 수락하면 매칭 성공 알림을 보내드릴게요.</p>
       </div>
 
       {selectedHelper && (
@@ -92,8 +96,8 @@ export function GuardianRequestStatus({
 
       <ol className="request-status-steps" aria-label="요청 진행 단계">
         <li className="is-current">
-          <strong>요청 확인</strong>
-          <span>작성한 내용을 다시 확인합니다.</span>
+          <strong>요청 전송 완료</strong>
+          <span>선택한 가치이웃에게 요청을 보냈습니다.</span>
         </li>
         <li>
           <strong>가치이웃 수락 대기</strong>
@@ -107,11 +111,11 @@ export function GuardianRequestStatus({
 
       <div className="request-consent-note">
         <strong>확정 전 안내</strong>
-        <p>요청 확정 전까지 민감 정보는 필요한 범위 이상으로 공개하지 않습니다.</p>
+        <p>가치제공자가 수락하기 전까지는 일정이 확정되지 않으며, 필요한 정보만 제한적으로 공개됩니다.</p>
       </div>
 
-      <button className="guardian-request-submit status-inline-submit" type="button" onClick={onOpenSchedule}>
-        일정 진행 상태 보기
+      <button className="guardian-request-submit status-inline-submit" type="button" onClick={onGoHome}>
+        홈으로 돌아가기
       </button>
 
       <nav className="search-bottom-nav status-bottom-nav" aria-label="하단 메뉴">

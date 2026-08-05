@@ -85,7 +85,6 @@ export function GuardianRequestConfirm({
                 <small>매칭 {selectedHelper?.completedCount || 128}회</small>
               </p>
             </div>
-            <img className="request-confirm-chevron" src={asset("request-confirm-icon-09.svg")} alt="" aria-hidden="true" />
           </article>
         </section>
 
