@@ -11,6 +11,8 @@ type GuardianCompletionReviewProps = {
   onGoHome: () => void;
   onOpenSearch: () => void;
   onOpenMatch: () => void;
+  onOpenChat: () => void;
+  onOpenProgress: () => void;
   onOpenProfile: () => void;
   onRequestAgain: () => void;
   onSaveReview: (content: string) => void;
@@ -23,6 +25,8 @@ export function GuardianCompletionReview({
   onGoHome,
   onOpenSearch,
   onOpenMatch,
+  onOpenChat,
+  onOpenProgress,
   onOpenProfile,
   onRequestAgain,
   onSaveReview
@@ -53,7 +57,7 @@ export function GuardianCompletionReview({
           </svg>
         </button>
         <strong>{SERVICE_NAME}</strong>
-        <NotificationBell onOpenMatch={onOpenMatch} />
+        <NotificationBell onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       <section className="completion-hero-card" aria-labelledby="guardian-completion-title">

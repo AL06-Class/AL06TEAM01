@@ -18,6 +18,15 @@ const initialCareRequest: CareRequest = {
   requestNote: ""
 };
 
+const emptyCareRequest: CareRequest = {
+  ...initialCareRequest,
+  region: "",
+  date: "",
+  time: "",
+  careType: "",
+  requestNote: ""
+};
+
 export function useApplicantCareFlow() {
   const [careRequest, setCareRequest] = useState(initialCareRequest);
   const [selectedHelperId, setSelectedHelperId] = useState(helpers[0].id);
@@ -41,6 +50,17 @@ export function useApplicantCareFlow() {
       ...currentRequest,
       [field]: value
     }));
+  };
+
+  const clearRequestNote = () => {
+    setCareRequest((currentRequest) => ({
+      ...currentRequest,
+      requestNote: ""
+    }));
+  };
+
+  const resetCareRequest = () => {
+    setCareRequest(emptyCareRequest);
   };
 
   const handleFindHelpers = () => {
@@ -93,6 +113,8 @@ export function useApplicantCareFlow() {
     onSelectPlan: handlePlanSelect,
     careRequest,
     onCareRequestChange: handleCareRequestChange,
+    onClearRequestNote: clearRequestNote,
+    onResetCareRequest: resetCareRequest,
     helpers,
     selectedHelperId,
     selectedHelper,

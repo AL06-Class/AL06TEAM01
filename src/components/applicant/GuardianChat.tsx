@@ -13,9 +13,11 @@ type GuardianChatProps = {
   onGoHome: () => void;
   onOpenSearch: () => void;
   onOpenMatch: () => void;
+  onOpenChat: () => void;
   onOpenProfile: () => void;
   onOpenProgress: () => void;
   onSendMessage: (content: string) => void;
+  canOpenReport: boolean;
 };
 
 export function GuardianChat({
@@ -26,13 +28,16 @@ export function GuardianChat({
   onGoHome,
   onOpenSearch,
   onOpenMatch,
+  onOpenChat,
   onOpenProfile,
   onOpenProgress,
-  onSendMessage
+  onSendMessage,
+  canOpenReport
 }: GuardianChatProps) {
   const [draftMessage, setDraftMessage] = useState("");
   const chatEndRef = useRef<HTMLDivElement>(null);
   const asset = (name: string) => `/figma-assets/${name}`;
+  const visitSchedule = [careRequest.date, careRequest.time].filter(Boolean).join(" · ");
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -60,7 +65,7 @@ export function GuardianChat({
           </svg>
         </button>
         <strong>{SERVICE_NAME}</strong>
-        <NotificationBell onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
+        <NotificationBell onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       {selectedHelper && (
@@ -69,20 +74,20 @@ export function GuardianChat({
           <div>
             <span>가치이웃</span>
             <h1 id="guardian-chat-title">{selectedHelper.name}</h1>
-            <p>
-              {careRequest.date} · {careRequest.time}
-            </p>
+            {visitSchedule && <p>{visitSchedule}</p>}
           </div>
-          <strong>수락 완료</strong>
+          <strong>{canOpenReport ? "수락 완료" : "요청 전"}</strong>
         </article>
       )}
 
       <div className="chat-safety-note">
         <strong>기록 안내</strong>
         <p>약속 장소, 준비물, 추가 요청은 채팅으로 남기면 진행 상황 확인에 도움이 됩니다.</p>
-        <button type="button" onClick={onOpenProgress}>
-          진행 리포트 보기
-        </button>
+        {canOpenReport && (
+          <button type="button" onClick={onOpenProgress}>
+            계획리포트
+          </button>
+        )}
       </div>
 
       <div className="guardian-chat-list" aria-label="채팅 메시지">

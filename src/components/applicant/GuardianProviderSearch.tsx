@@ -1,22 +1,40 @@
 import { useState } from "react";
 import type { KeyboardEvent } from "react";
+import type { CareRequest } from "../../types/careRequest";
 import type { Helper } from "../../types/helper";
 import { NotificationBell } from "./NotificationBell";
 
 type GuardianProviderSearchProps = {
   helpers: Helper[];
+  careRequest: CareRequest;
   isRequestSearch?: boolean;
   selectedHelperId: string;
   onSelectHelper: (helperId: string) => void;
   onOpenHelperDetail: () => void;
   onBackHome: () => void;
   onOpenMatch: () => void;
+  onOpenChat: () => void;
+  onOpenProgress: () => void;
   onOpenProfile: () => void;
   onStartRequest: () => void;
 };
 
 const formatPrice = (price: number) => `${price.toLocaleString("ko-KR")}원`;
 type SearchSort = "distance" | "rating" | "price";
+type DetailFilters = {
+  verifiedOnly: boolean;
+  videoOnly: boolean;
+  maxPrice: "all" | "14000" | "15000";
+  minRating: "all" | "4.8" | "4.9";
+};
+
+const helpFilterKeywords: Record<string, string[]> = {
+  장보기: ["장보기", "마트", "생필품"],
+  "병원 동행": ["병원", "동행", "검진"],
+  말벗: ["말벗", "대화", "소통"],
+  "디지털 기기 교육": ["디지털", "스마트폰", "기기", "키오스크"],
+  "짐 옮기기": ["짐", "옮기기", "무거운"]
+};
 
 const getDistanceValue = (distance: string) => {
   const matchedDistance = distance.match(/([\d.]+)\s*(km|m)/i);
@@ -31,19 +49,86 @@ const getDistanceValue = (distance: string) => {
 
 export function GuardianProviderSearch({
   helpers,
+  careRequest,
   isRequestSearch = false,
   selectedHelperId,
   onSelectHelper,
   onOpenHelperDetail,
   onBackHome,
   onOpenMatch,
+  onOpenChat,
+  onOpenProgress,
   onOpenProfile,
   onStartRequest
 }: GuardianProviderSearchProps) {
   const [openHelperId, setOpenHelperId] = useState("");
   const [sortBy, setSortBy] = useState<SearchSort>("distance");
+  const [isDetailFilterOpen, setIsDetailFilterOpen] = useState(false);
+  const [detailFilters, setDetailFilters] = useState<DetailFilters>({
+    verifiedOnly: false,
+    videoOnly: false,
+    maxPrice: "all",
+    minRating: "all"
+  });
   const asset = (name: string) => `/figma-assets/${name}`;
-  const sortedHelpers = [...helpers].sort((firstHelper, secondHelper) => {
+  const selectedHelpTypes = careRequest.careType
+    .split(",")
+    .map((helpType) => helpType.trim())
+    .filter(Boolean);
+  const selectedHelpKeywords = selectedHelpTypes.flatMap((helpType) => helpFilterKeywords[helpType] || [helpType]);
+  const selectedArea = careRequest.region.match(/(?:제주시|서귀포시)\s*[가-힣]+[읍면동]/)?.[0] || "";
+  const appliedFilterChips = [
+    ...selectedHelpTypes,
+    careRequest.date,
+    careRequest.time.split("-")[0] || careRequest.time,
+    selectedArea || careRequest.region,
+    detailFilters.verifiedOnly ? "본인확인 완료" : "",
+    detailFilters.videoOnly ? "영상 보유" : "",
+    detailFilters.maxPrice !== "all" ? `${formatPrice(Number(detailFilters.maxPrice))} 이하` : "",
+    detailFilters.minRating !== "all" ? `★ ${detailFilters.minRating} 이상` : ""
+  ].filter(Boolean);
+  const matchesHelpFilter = (helper: Helper) => {
+    if (!isRequestSearch || selectedHelpKeywords.length === 0) {
+      return true;
+    }
+
+    const searchableText = [
+      helper.name,
+      helper.distance,
+      helper.description,
+      helper.quote,
+      ...helper.badges,
+      ...helper.trustItems
+    ].join(" ");
+
+    return selectedHelpKeywords.some((keyword) => searchableText.includes(keyword));
+  };
+  const matchesDetailFilters = (helper: Helper) => {
+    const hasVerified = helper.trustItems.some((item) => item.includes("본인확인")) || helper.badges.some((badge) => badge.includes("본인확인"));
+    const hasVideo = true;
+    const matchesPrice = detailFilters.maxPrice === "all" || helper.price <= Number(detailFilters.maxPrice);
+    const matchesRating = detailFilters.minRating === "all" || helper.rating >= Number(detailFilters.minRating);
+
+    return (!detailFilters.verifiedOnly || hasVerified) && (!detailFilters.videoOnly || hasVideo) && matchesPrice && matchesRating;
+  };
+  const hasActiveDetailFilter =
+    detailFilters.verifiedOnly ||
+    detailFilters.videoOnly ||
+    detailFilters.maxPrice !== "all" ||
+    detailFilters.minRating !== "all";
+  const filteredHelpers = helpers.filter(matchesHelpFilter);
+  const visibleHelpers = filteredHelpers.length > 0 ? filteredHelpers : helpers;
+  const detailFilteredHelpers = visibleHelpers.filter(matchesDetailFilters);
+  const sortedHelpers = [...detailFilteredHelpers].sort((firstHelper, secondHelper) => {
+      if (isRequestSearch && selectedArea) {
+        const firstAreaMatch = firstHelper.distance.includes(selectedArea) ? 0 : 1;
+        const secondAreaMatch = secondHelper.distance.includes(selectedArea) ? 0 : 1;
+
+        if (firstAreaMatch !== secondAreaMatch) {
+          return firstAreaMatch - secondAreaMatch;
+        }
+      }
+
       if (sortBy === "rating") {
         return secondHelper.rating - firstHelper.rating || secondHelper.reviewCount - firstHelper.reviewCount;
       }
@@ -68,11 +153,20 @@ export function GuardianProviderSearch({
     }
   };
 
+  const resetDetailFilters = () => {
+    setDetailFilters({
+      verifiedOnly: false,
+      videoOnly: false,
+      maxPrice: "all",
+      minRating: "all"
+    });
+  };
+
   return (
     <section className="guardian-search" aria-labelledby="guardian-search-title">
       <header className="guardian-search-header search-page-header">
         <strong>가치이웃 검색</strong>
-        <NotificationBell onOpenMatch={onOpenMatch} />
+        <NotificationBell onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       <div className="guardian-search-copy">
@@ -83,7 +177,7 @@ export function GuardianProviderSearch({
               <br />
               가치이웃을 찾았어요
             </h1>
-            <p>작성한 도움 내용과 제주 지역 기준에 맞춰 추천된 가치이웃입니다. 프로필을 눌러 상세정보를 확인해보세요.</p>
+            <p>상세 조건 설정에서 선택한 도움 종류와 위치를 기준으로 가치이웃을 정리했어요.</p>
           </>
         ) : (
           <>
@@ -101,10 +195,25 @@ export function GuardianProviderSearch({
         <button className={sortBy === "distance" ? "is-active" : ""} type="button" onClick={() => setSortBy("distance")}>거리순</button>
         <button className={sortBy === "rating" ? "is-active" : ""} type="button" onClick={() => setSortBy("rating")}>평점순</button>
         <button className={sortBy === "price" ? "is-active" : ""} type="button" onClick={() => setSortBy("price")}>낮은 가격순</button>
+        <button className={hasActiveDetailFilter ? "is-active" : ""} type="button" onClick={() => setIsDetailFilterOpen(true)}>상세필터</button>
       </div>
 
+      {isRequestSearch && appliedFilterChips.length > 0 && (
+        <div className="search-applied-filter" aria-label="적용된 상세 조건">
+          {appliedFilterChips.map((filterChip) => (
+            <span key={filterChip}>{filterChip}</span>
+          ))}
+        </div>
+      )}
+
       <div className="guardian-provider-list">
-        {sortedHelpers.map((helper) => {
+        {sortedHelpers.length === 0 ? (
+          <div className="search-empty-result" role="status">
+            <strong>조건에 맞는 가치이웃이 아직 없어요</strong>
+            <p>상세필터를 조금 넓히면 더 많은 가치이웃을 볼 수 있어요.</p>
+            <button type="button" onClick={resetDetailFilters}>필터 초기화</button>
+          </div>
+        ) : sortedHelpers.map((helper) => {
           const isSelected = helper.id === openHelperId;
           const isActive = helper.id === selectedHelperId || isSelected;
           const detailPanelId = `${helper.id}-detail`;
@@ -173,6 +282,88 @@ export function GuardianProviderSearch({
           );
         })}
       </div>
+
+      {isDetailFilterOpen && (
+        <div className="search-detail-filter-backdrop" role="presentation" onClick={() => setIsDetailFilterOpen(false)}>
+          <section
+            aria-labelledby="search-detail-filter-title"
+            className="search-detail-filter-sheet"
+            role="dialog"
+            aria-modal="true"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="search-detail-filter-header">
+              <strong id="search-detail-filter-title">상세필터</strong>
+              <button type="button" aria-label="상세필터 닫기" onClick={() => setIsDetailFilterOpen(false)}>×</button>
+            </div>
+
+            <div className="search-detail-filter-section">
+              <b>신뢰 조건</b>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={detailFilters.verifiedOnly}
+                  onChange={(event) => setDetailFilters((current) => ({ ...current, verifiedOnly: event.target.checked }))}
+                />
+                본인확인 완료만 보기
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={detailFilters.videoOnly}
+                  onChange={(event) => setDetailFilters((current) => ({ ...current, videoOnly: event.target.checked }))}
+                />
+                자기소개 영상 보유
+              </label>
+            </div>
+
+            <div className="search-detail-filter-section">
+              <b>시간당 비용</b>
+              <div className="search-detail-option-row">
+                {[
+                  ["all", "전체"],
+                  ["14000", "14,000원 이하"],
+                  ["15000", "15,000원 이하"]
+                ].map(([value, label]) => (
+                  <button
+                    className={detailFilters.maxPrice === value ? "is-selected" : ""}
+                    key={value}
+                    type="button"
+                    onClick={() => setDetailFilters((current) => ({ ...current, maxPrice: value as DetailFilters["maxPrice"] }))}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="search-detail-filter-section">
+              <b>평점</b>
+              <div className="search-detail-option-row">
+                {[
+                  ["all", "전체"],
+                  ["4.8", "4.8 이상"],
+                  ["4.9", "4.9 이상"]
+                ].map(([value, label]) => (
+                  <button
+                    className={detailFilters.minRating === value ? "is-selected" : ""}
+                    key={value}
+                    type="button"
+                    onClick={() => setDetailFilters((current) => ({ ...current, minRating: value as DetailFilters["minRating"] }))}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="search-detail-filter-actions">
+              <button type="button" onClick={resetDetailFilters}>초기화</button>
+              <button type="button" onClick={() => setIsDetailFilterOpen(false)}>적용하기</button>
+            </div>
+          </section>
+        </div>
+      )}
 
       <nav className="search-bottom-nav" aria-label="하단 메뉴">
         <button type="button" onClick={onBackHome}>

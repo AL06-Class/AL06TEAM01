@@ -1,8 +1,15 @@
 import { useLayoutEffect, useState } from "react";
 import { useApplicantCareFlow } from "../../hooks/useApplicantCareFlow";
 import { ApplicantMainHero } from "./ApplicantMainHero";
+import { GuardianCarePlanConfirm } from "./GuardianCarePlanConfirm";
 import { GuardianChat } from "./GuardianChat";
+import { GuardianCompletionApproval } from "./GuardianCompletionApproval";
 import { GuardianCompletionReview } from "./GuardianCompletionReview";
+import { GuardianInfoOnboarding } from "./GuardianInfoOnboarding";
+import { GuardianMatchSuccess } from "./GuardianMatchSuccess";
+import { GuardianOnboardingComplete } from "./GuardianOnboardingComplete";
+import { GuardianParentOnboarding } from "./GuardianParentOnboarding";
+import { GuardianPayment } from "./GuardianPayment";
 import { GuardianProgressReport } from "./GuardianProgressReport";
 import { GuardianProfile } from "./GuardianProfile";
 import { GuardianProviderDetail } from "./GuardianProviderDetail";
@@ -10,15 +17,77 @@ import { GuardianProviderSearch } from "./GuardianProviderSearch";
 import { GuardianRequestConfirm } from "./GuardianRequestConfirm";
 import { GuardianRequestForm } from "./GuardianRequestForm";
 import { GuardianRequestStatus } from "./GuardianRequestStatus";
+import { GuardianReviewForm } from "./GuardianReviewForm";
 import { GuardianScheduleStatus } from "./GuardianScheduleStatus";
+import { GuardianStartScreen } from "./GuardianStartScreen";
+import { ProviderHome } from "../provider/ProviderHome";
+
+type Screen =
+  | "start"
+  | "guardianInfo"
+  | "parentInfo"
+  | "onboardingComplete"
+  | "home"
+  | "search"
+  | "providerDetail"
+  | "request"
+  | "confirm"
+  | "status"
+  | "matchSuccess"
+  | "carePlan"
+  | "schedule"
+  | "chat"
+  | "progress"
+  | "completionApproval"
+  | "payment"
+  | "review"
+  | "completion"
+  | "profile";
+
+export type GuardianParentInfo = {
+  name: string;
+  age: string;
+  relation: string;
+  address: string;
+  detailAddress: string;
+  note: string;
+  photoUrl: string;
+};
+
+export type GuardianProfileInfo = {
+  name: string;
+  phone: string;
+  relation: string;
+  address: string;
+  detailAddress: string;
+  photoUrl: string;
+};
 
 export function ApplicantCareFlow() {
-  const [activeScreen, setActiveScreen] = useState<
-    "home" | "search" | "providerDetail" | "request" | "confirm" | "status" | "schedule" | "chat" | "progress" | "completion" | "profile"
-  >("home");
+  const [activeRole, setActiveRole] = useState<"guardian" | "provider">("guardian");
+  const [activeScreen, setActiveScreen] = useState<Screen>("start");
+  const [screenHistory, setScreenHistory] = useState<Screen[]>([]);
   const [isRequestSearch, setIsRequestSearch] = useState(false);
   const [directRequestHelperId, setDirectRequestHelperId] = useState("");
   const [directRequestSubmitLabel, setDirectRequestSubmitLabel] = useState("");
+  const [matchedHelperId, setMatchedHelperId] = useState("provider-minseok");
+  const [profileInfo, setProfileInfo] = useState<GuardianProfileInfo>({
+    name: "이민정",
+    phone: "010-1234-5678",
+    relation: "자녀",
+    address: "제주시 조천읍",
+    detailAddress: "",
+    photoUrl: ""
+  });
+  const [parentInfo, setParentInfo] = useState<GuardianParentInfo>({
+    name: "김영자",
+    age: "72",
+    relation: "어머니",
+    address: "제주시 조천읍",
+    detailAddress: "",
+    note: "장거리 이동은 동행이 필요해요.",
+    photoUrl: ""
+  });
   const {
     careRequest,
     onCareRequestChange,
@@ -27,16 +96,41 @@ export function ApplicantCareFlow() {
     selectedHelper,
     onSelectHelper,
     onFindHelpers,
+    onClearRequestNote,
+    onResetCareRequest,
+    onPay,
     careReportItems,
     messages,
     onSendMessage,
     onSaveReview
   } = useApplicantCareFlow();
 
+  const navigate = (screen: Screen) => {
+    setActiveScreen((currentScreen) => {
+      if (currentScreen === screen) {
+        return currentScreen;
+      }
+
+      setScreenHistory((currentHistory) => [...currentHistory, currentScreen].slice(-20));
+      return screen;
+    });
+  };
+
+  const goBack = (fallback: Screen = "home") => {
+    setScreenHistory((currentHistory) => {
+      const previousScreen = currentHistory[currentHistory.length - 1];
+
+      setActiveScreen(previousScreen || fallback);
+      return currentHistory.slice(0, -1);
+    });
+  };
+
   const openRequestFlow = () => {
     setDirectRequestHelperId("");
     setDirectRequestSubmitLabel("");
-    setActiveScreen("request");
+    setIsRequestSearch(false);
+    onResetCareRequest();
+    navigate("request");
   };
 
   const openRepeatRequestFlow = (helperId: string) => {
@@ -44,35 +138,57 @@ export function ApplicantCareFlow() {
     setDirectRequestHelperId(helperId);
     setDirectRequestSubmitLabel("다시 요청하기");
     setIsRequestSearch(false);
-    setActiveScreen("request");
+    onClearRequestNote();
+    navigate("request");
   };
 
   const openSelectedHelperRequestFlow = () => {
     setDirectRequestHelperId(selectedHelperId);
     setDirectRequestSubmitLabel("도움 요청하기");
     setIsRequestSearch(false);
-    setActiveScreen("request");
+    onClearRequestNote();
+    navigate("request");
   };
 
   const openHomeMatchedDetail = () => {
     onSelectHelper("provider-minseok");
-    setActiveScreen("providerDetail");
+    navigate("providerDetail");
+  };
+
+  const openHomeMatchedChat = () => {
+    onSelectHelper("provider-minseok");
+    navigate("chat");
+  };
+
+  const openMatchedSchedule = () => {
+    onSelectHelper(matchedHelperId);
+    navigate("schedule");
+  };
+
+  const openMatchedChat = () => {
+    onSelectHelper(matchedHelperId);
+    navigate("chat");
+  };
+
+  const openMatchedProgress = () => {
+    onSelectHelper(matchedHelperId);
+    navigate("progress");
   };
 
   const submitRequestFlow = () => {
     if (directRequestHelperId) {
-      setActiveScreen("confirm");
+      navigate("confirm");
       return;
     }
 
     onFindHelpers();
     setIsRequestSearch(true);
-    setActiveScreen("search");
+    navigate("search");
   };
 
   const submitSelectedHelperRequest = () => {
     if (isRequestSearch) {
-      setActiveScreen("confirm");
+      navigate("confirm");
       return;
     }
 
@@ -80,11 +196,15 @@ export function ApplicantCareFlow() {
   };
 
   const sendConfirmedRequest = () => {
-    onFindHelpers();
     setDirectRequestHelperId("");
     setDirectRequestSubmitLabel("");
     setIsRequestSearch(false);
-    setActiveScreen("status");
+    navigate("status");
+  };
+
+  const completePayment = () => {
+    onPay();
+    navigate("review");
   };
 
   useLayoutEffect(() => {
@@ -116,38 +236,72 @@ export function ApplicantCareFlow() {
 
   return (
     <main className="app-shell" id="top">
-      {activeScreen === "home" ? (
+      {activeRole === "provider" ? (
+        <ProviderHome
+          onSwitchToGuardian={() => {
+            setActiveRole("guardian");
+            navigate("home");
+          }}
+        />
+      ) : activeScreen === "start" ? (
+        <GuardianStartScreen
+          onStartGuardian={() => navigate("guardianInfo")}
+          onStartProvider={() => setActiveRole("provider")}
+        />
+      ) : activeScreen === "guardianInfo" ? (
+        <GuardianInfoOnboarding
+          profileInfo={profileInfo}
+          onProfileInfoChange={setProfileInfo}
+          onBack={() => goBack("start")}
+          onComplete={() => navigate("parentInfo")}
+        />
+      ) : activeScreen === "parentInfo" ? (
+        <GuardianParentOnboarding
+          parentInfo={parentInfo}
+          onParentInfoChange={setParentInfo}
+          onBack={() => goBack("guardianInfo")}
+          onComplete={() => navigate("onboardingComplete")}
+        />
+      ) : activeScreen === "onboardingComplete" ? (
+        <GuardianOnboardingComplete onStart={() => navigate("home")} />
+      ) : activeScreen === "home" ? (
         <ApplicantMainHero
           onStartRequest={openRequestFlow}
+          onSwitchToProvider={() => setActiveRole("provider")}
           onOpenSearch={() => {
             setIsRequestSearch(false);
-            setActiveScreen("search");
+            navigate("search");
           }}
-          onOpenMatch={() => setActiveScreen("schedule")}
+          onOpenMatch={() => navigate("schedule")}
           onOpenMatchedDetail={openHomeMatchedDetail}
-          onOpenChat={() => setActiveScreen("chat")}
-          onOpenProfile={() => setActiveScreen("profile")}
+          onOpenChat={openHomeMatchedChat}
+          onOpenProgress={openMatchedProgress}
+          onOpenProfile={() => navigate("profile")}
         />
       ) : activeScreen === "search" ? (
         <GuardianProviderSearch
           helpers={helpers}
+          careRequest={careRequest}
           isRequestSearch={isRequestSearch}
           selectedHelperId={selectedHelperId}
           onSelectHelper={onSelectHelper}
-          onOpenHelperDetail={() => setActiveScreen("providerDetail")}
+          onOpenHelperDetail={() => navigate("providerDetail")}
           onBackHome={() => {
             setIsRequestSearch(false);
-            setActiveScreen("home");
+            navigate("home");
           }}
-          onOpenMatch={() => setActiveScreen("schedule")}
-          onOpenProfile={() => setActiveScreen("profile")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProgress={openMatchedProgress}
+          onOpenProfile={() => navigate("profile")}
           onStartRequest={openRequestFlow}
         />
       ) : activeScreen === "providerDetail" ? (
         <GuardianProviderDetail
           selectedHelper={selectedHelper}
-          onBackSearch={() => setActiveScreen("search")}
-          onOpenChat={() => setActiveScreen("chat")}
+          onBackSearch={() => goBack("search")}
+          onOpenChat={() => navigate("chat")}
+          onOpenReview={() => navigate("review")}
           onStartRequest={submitSelectedHelperRequest}
         />
       ) : activeScreen === "request" ? (
@@ -156,52 +310,75 @@ export function ApplicantCareFlow() {
           selectedHelper={directRequestHelperId ? selectedHelper : undefined}
           submitLabel={directRequestSubmitLabel || undefined}
           onChange={onCareRequestChange}
-          onGoHome={() => setActiveScreen("home")}
-          onBackSearch={() => setActiveScreen("search")}
-          onOpenMatch={() => setActiveScreen("schedule")}
-          onOpenProfile={() => setActiveScreen("profile")}
+          onGoHome={() => navigate("home")}
+          onBackSearch={() => goBack("search")}
+          onOpenMatch={() => navigate("schedule")}
+          onOpenProfile={() => navigate("profile")}
           onSubmitRequest={submitRequestFlow}
         />
       ) : activeScreen === "confirm" ? (
         <GuardianRequestConfirm
           careRequest={careRequest}
           selectedHelper={selectedHelper}
-          onBack={() => setActiveScreen(directRequestHelperId ? "request" : "providerDetail")}
+          onBack={() => goBack(directRequestHelperId ? "request" : "providerDetail")}
           onSubmit={sendConfirmedRequest}
         />
       ) : activeScreen === "status" ? (
         <GuardianRequestStatus
           careRequest={careRequest}
           selectedHelper={selectedHelper}
-          onBackRequest={() => setActiveScreen("request")}
-          onGoHome={() => setActiveScreen("home")}
-          onOpenSearch={() => setActiveScreen("search")}
-          onOpenMatch={() => setActiveScreen("schedule")}
-          onOpenProfile={() => setActiveScreen("profile")}
-          onOpenSchedule={() => setActiveScreen("schedule")}
+          onBackRequest={() => goBack("request")}
+          onGoHome={() => navigate("home")}
+          onOpenSearch={() => navigate("search")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProgress={openMatchedProgress}
+          onOpenProfile={() => navigate("profile")}
+          onOpenSchedule={openMatchedSchedule}
+        />
+      ) : activeScreen === "matchSuccess" ? (
+        <GuardianMatchSuccess
+          selectedHelper={selectedHelper}
+          onBackHome={() => goBack("home")}
+          onOpenChat={() => navigate("chat")}
+          onOpenPlan={() => navigate("carePlan")}
+        />
+      ) : activeScreen === "carePlan" ? (
+        <GuardianCarePlanConfirm
+          careRequest={careRequest}
+          selectedHelper={selectedHelper}
+          onBack={() => goBack("matchSuccess")}
+          onConfirm={() => navigate("schedule")}
+          onOpenChat={() => navigate("chat")}
         />
       ) : activeScreen === "schedule" ? (
         <GuardianScheduleStatus
           careRequest={careRequest}
           selectedHelper={selectedHelper}
-          onBackStatus={() => setActiveScreen("status")}
-          onGoHome={() => setActiveScreen("home")}
-          onOpenSearch={() => setActiveScreen("search")}
-          onOpenChat={() => setActiveScreen("chat")}
-          onOpenProfile={() => setActiveScreen("profile")}
+          reportItems={careReportItems}
+          onBackStatus={() => goBack("status")}
+          onGoHome={() => navigate("home")}
+          onOpenSearch={() => navigate("search")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProgress={openMatchedProgress}
+          onOpenProfile={() => navigate("profile")}
           onRepeatRequest={openRepeatRequestFlow}
+          onOpenReview={() => navigate("review")}
         />
       ) : activeScreen === "chat" ? (
         <GuardianChat
           careRequest={careRequest}
           messages={messages}
           selectedHelper={selectedHelper}
-          onBackSchedule={() => setActiveScreen("schedule")}
-          onGoHome={() => setActiveScreen("home")}
-          onOpenSearch={() => setActiveScreen("search")}
-          onOpenMatch={() => setActiveScreen("schedule")}
-          onOpenProfile={() => setActiveScreen("profile")}
-          onOpenProgress={() => setActiveScreen("progress")}
+          canOpenReport={selectedHelperId === matchedHelperId}
+          onBackSchedule={() => goBack("schedule")}
+          onGoHome={() => navigate("home")}
+          onOpenSearch={() => navigate("search")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProfile={() => navigate("profile")}
+          onOpenProgress={openMatchedProgress}
           onSendMessage={onSendMessage}
         />
       ) : activeScreen === "progress" ? (
@@ -209,30 +386,61 @@ export function ApplicantCareFlow() {
           careRequest={careRequest}
           reportItems={careReportItems}
           selectedHelper={selectedHelper}
-          onBackChat={() => setActiveScreen("chat")}
-          onGoHome={() => setActiveScreen("home")}
-          onOpenSearch={() => setActiveScreen("search")}
-          onOpenMatch={() => setActiveScreen("schedule")}
-          onOpenProfile={() => setActiveScreen("profile")}
-          onComplete={() => setActiveScreen("completion")}
+          onBackChat={() => goBack("chat")}
+          onGoHome={() => navigate("home")}
+          onOpenSearch={() => navigate("search")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProgress={openMatchedProgress}
+          onOpenProfile={() => navigate("profile")}
+          onComplete={() => navigate("completionApproval")}
+        />
+      ) : activeScreen === "completionApproval" ? (
+        <GuardianCompletionApproval
+          careRequest={careRequest}
+          onBack={() => goBack("progress")}
+          onApprove={() => navigate("payment")}
+          onReportProblem={() => navigate("chat")}
+        />
+      ) : activeScreen === "payment" ? (
+        <GuardianPayment
+          onBack={() => goBack("completionApproval")}
+          onPay={completePayment}
+        />
+      ) : activeScreen === "review" ? (
+        <GuardianReviewForm
+          selectedHelper={selectedHelper}
+          onBack={() => goBack("payment")}
+          onSubmitReview={(content) => {
+            onSaveReview(content);
+            navigate("schedule");
+          }}
         />
       ) : activeScreen === "completion" ? (
         <GuardianCompletionReview
           careRequest={careRequest}
           selectedHelper={selectedHelper}
-          onBackProgress={() => setActiveScreen("progress")}
-          onGoHome={() => setActiveScreen("home")}
-          onOpenSearch={() => setActiveScreen("search")}
-          onOpenMatch={() => setActiveScreen("schedule")}
-          onOpenProfile={() => setActiveScreen("profile")}
-          onRequestAgain={() => setActiveScreen("home")}
+          onBackProgress={() => goBack("progress")}
+          onGoHome={() => navigate("home")}
+          onOpenSearch={() => navigate("search")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProgress={openMatchedProgress}
+          onOpenProfile={() => navigate("profile")}
+          onRequestAgain={() => navigate("home")}
           onSaveReview={onSaveReview}
         />
       ) : (
         <GuardianProfile
-          onGoHome={() => setActiveScreen("home")}
-          onOpenSearch={() => setActiveScreen("search")}
-          onOpenMatch={() => setActiveScreen("schedule")}
+          profileInfo={profileInfo}
+          onProfileInfoChange={setProfileInfo}
+          parentInfo={parentInfo}
+          onParentInfoChange={setParentInfo}
+          onGoHome={() => navigate("home")}
+          onOpenSearch={() => navigate("search")}
+          onOpenMatch={openMatchedSchedule}
+          onOpenChat={openMatchedChat}
+          onOpenProgress={openMatchedProgress}
         />
       )}
     </main>

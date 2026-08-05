@@ -1,31 +1,59 @@
+import { useState } from "react";
 import { NotificationBell } from "./NotificationBell";
 
 type ApplicantMainHeroProps = {
   onStartRequest: () => void;
+  onSwitchToProvider: () => void;
   onOpenSearch: () => void;
   onOpenMatch: () => void;
   onOpenMatchedDetail: () => void;
   onOpenChat: () => void;
+  onOpenProgress: () => void;
   onOpenProfile: () => void;
 };
 
 export function ApplicantMainHero({
   onStartRequest,
+  onSwitchToProvider,
   onOpenSearch,
   onOpenMatch,
   onOpenMatchedDetail,
   onOpenChat,
+  onOpenProgress,
   onOpenProfile
 }: ApplicantMainHeroProps) {
   const asset = (name: string) => `/figma-assets/${name}`;
+  const [isRoleMenuOpen, setIsRoleMenuOpen] = useState(false);
 
   return (
     <section className="guardian-home" aria-labelledby="guardian-home-title">
       <header className="guardian-header">
         <div className="guardian-brand-row">
-          <img className="guardian-logo-mark" src={asset("guardian-logo-mark.png")} alt="가치이음" />
+          <img className="guardian-logo-mark" src={asset("gachi-logo-icon.png")} alt="가치이음" />
+          <div className="role-select-wrap">
+            <button
+              className="role-select-button"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={isRoleMenuOpen}
+              onClick={() => setIsRoleMenuOpen((current) => !current)}
+            >
+              보호자
+              <span aria-hidden="true" />
+            </button>
+            {isRoleMenuOpen && (
+              <div className="role-select-menu" role="menu" aria-label="역할 선택">
+                <button className="is-active" type="button" role="menuitem" onClick={() => setIsRoleMenuOpen(false)}>
+                  보호자
+                </button>
+                <button type="button" role="menuitem" onClick={onSwitchToProvider}>
+                  가치제공자
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        <NotificationBell className="icon-button" onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} />
+        <NotificationBell className="icon-button" onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       <main className="guardian-content">

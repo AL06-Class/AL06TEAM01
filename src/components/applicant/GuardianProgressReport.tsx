@@ -1,4 +1,3 @@
-import { SERVICE_NAME } from "../../constants";
 import type { CareReportItem } from "../../types/careReport";
 import type { CareRequest } from "../../types/careRequest";
 import type { Helper } from "../../types/helper";
@@ -12,6 +11,8 @@ type GuardianProgressReportProps = {
   onGoHome: () => void;
   onOpenSearch: () => void;
   onOpenMatch: () => void;
+  onOpenChat: () => void;
+  onOpenProgress: () => void;
   onOpenProfile: () => void;
   onComplete: () => void;
 };
@@ -24,50 +25,51 @@ export function GuardianProgressReport({
   onGoHome,
   onOpenSearch,
   onOpenMatch,
+  onOpenChat,
+  onOpenProgress,
   onOpenProfile,
   onComplete
 }: GuardianProgressReportProps) {
   const asset = (name: string) => `/figma-assets/${name}`;
+  const visitSchedule = [careRequest.date, careRequest.time].filter(Boolean).join(" · ");
 
   return (
     <section className="guardian-progress" aria-labelledby="guardian-progress-title">
-      <p className="search-context-label">진행 리포트</p>
+      <p className="search-context-label">예상 계획리포트</p>
 
       <header className="guardian-search-header">
-        <button className="search-back-button" type="button" onClick={onBackChat} aria-label="채팅으로 돌아가기">
+        <button className="search-back-button" type="button" onClick={onBackChat} aria-label="이전 화면으로 돌아가기">
           <svg aria-hidden="true" viewBox="0 0 24 24">
             <path d="M15 18L9 12L15 6" />
           </svg>
         </button>
-        <strong>{SERVICE_NAME}</strong>
-        <NotificationBell onOpenMatch={onOpenMatch} />
+        <strong>예상 계획리포트</strong>
+        <NotificationBell onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       <section className="progress-hero-card" aria-labelledby="guardian-progress-title">
-        <span>진행 중</span>
+        <span>작성 대기 중</span>
         <h1 id="guardian-progress-title">
-          생활 도움이
+          아직 계획리포트가
           <br />
-          차분히 진행되고 있어요
+          작성되기 전이에요
         </h1>
-        <p>보호자가 안심할 수 있도록 필요한 기록만 시간순으로 남깁니다.</p>
+        <p>아래 내용은 요청 정보를 바탕으로 정리한 예상 계획이에요. 가치제공자가 확인하면 실제 계획리포트로 업데이트돼요.</p>
       </section>
 
       {selectedHelper && (
         <article className="progress-provider-card">
           <img src={selectedHelper.imageUrl} alt="" />
           <div>
-            <span>진행 중인 가치이웃</span>
+            <span>계획 작성 예정 가치이웃</span>
             <strong>{selectedHelper.name}</strong>
-            <p>
-              {careRequest.date} · {careRequest.time}
-            </p>
+            {visitSchedule && <p>{visitSchedule}</p>}
           </div>
-          <b>진행</b>
+          <b>대기</b>
         </article>
       )}
 
-      <ol className="guardian-progress-timeline" aria-label="진행 기록">
+      <ol className="guardian-progress-timeline" aria-label="예상 계획">
         {reportItems.map((item, index) => (
           <li className={index === reportItems.length - 1 ? "is-current" : ""} key={`${item.time}-${item.label}`}>
             <time>{item.time}</time>
@@ -80,8 +82,8 @@ export function GuardianProgressReport({
       </ol>
 
       <section className="progress-privacy-note" aria-label="개인정보 안내">
-        <strong>기록 원칙</strong>
-        <p>완료 확인에 필요한 내용만 남기며, 사진이나 민감 정보는 보호자 확인 없이 공개하지 않습니다.</p>
+        <strong>안내</strong>
+        <p>가치제공자가 계획리포트를 작성하면 방문 전 준비사항과 진행 순서를 다시 확인할 수 있어요.</p>
       </section>
 
       <button className="guardian-request-submit progress-inline-submit" type="button" onClick={onComplete}>

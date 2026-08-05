@@ -53,10 +53,10 @@ export function NotificationBell({
     },
     {
       id: "progress",
-      title: "진행 리포트 도착",
+      title: "계획리포트 도착",
       body: "방문 진행 상황을 확인할 수 있어요.",
       time: "어제",
-      actionLabel: "리포트 보기",
+      actionLabel: "일정표 보기",
       onClick: onOpenProgress
     }
   ];

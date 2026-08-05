@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { CareReportItem } from "../../types/careReport";
 import type { CareRequest } from "../../types/careRequest";
 import type { Helper } from "../../types/helper";
 import { NotificationBell } from "./NotificationBell";
@@ -9,9 +10,13 @@ type GuardianScheduleStatusProps = {
   onGoHome: () => void;
   onBackStatus: () => void;
   onOpenSearch: () => void;
+  onOpenMatch: () => void;
   onOpenChat: () => void;
+  onOpenProgress: () => void;
   onOpenProfile: () => void;
   onRepeatRequest: (helperId: string) => void;
+  onOpenReview: () => void;
+  reportItems: CareReportItem[];
 };
 
 type MatchTab = "active" | "history";
@@ -51,19 +56,22 @@ export function GuardianScheduleStatus({
   selectedHelper,
   onGoHome,
   onOpenSearch,
+  onOpenMatch,
   onOpenChat,
+  onOpenProgress,
   onOpenProfile,
-  onRepeatRequest
+  onRepeatRequest,
+  onOpenReview,
+  reportItems
 }: GuardianScheduleStatusProps) {
   const asset = (name: string) => `/figma-assets/${name}`;
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<MatchTab>("active");
 
   return (
     <section className="guardian-schedule" aria-labelledby="guardian-schedule-title">
       <header className="match-app-header">
         <h1 id="guardian-schedule-title">매칭현황</h1>
-        <NotificationBell onOpenChat={onOpenChat} />
+        <NotificationBell onOpenChat={onOpenChat} onOpenMatch={onOpenMatch} onOpenProgress={onOpenProgress} />
       </header>
 
       <div className="match-tabs" aria-label="매칭 상태">
@@ -104,7 +112,6 @@ export function GuardianScheduleStatus({
                     <strong>{selectedHelper.name}</strong>
                     <span>매칭 {selectedHelper.completedCount}회 · ★ {selectedHelper.rating.toFixed(1)}</span>
                   </div>
-                  <b>인증 가치이웃</b>
                 </div>
               )}
 
@@ -113,67 +120,50 @@ export function GuardianScheduleStatus({
                   <img src={asset("icon-chat.svg")} alt="" aria-hidden="true" />
                   채팅하기
                 </button>
-                <button
-                  className="match-detail-button"
-                  type="button"
-                  aria-controls="schedule-detail-panel"
-                  aria-expanded={isDetailOpen}
-                  onClick={() => setIsDetailOpen((current) => !current)}
-                >
-                  {isDetailOpen ? "상세 닫기" : "일정 상세"}
-                </button>
               </div>
             </article>
 
-            {isDetailOpen && (
-              <div id="schedule-detail-panel">
-                <section className="schedule-detail-card" aria-labelledby="schedule-detail-title">
-                  <h2 id="schedule-detail-title">일정 상세</h2>
-                  <dl>
-                    <div>
-                      <dt>도움 유형</dt>
-                      <dd>{careRequest.careType}</dd>
-                    </div>
-                    <div>
-                      <dt>일정</dt>
-                      <dd>
-                        {careRequest.date} · {careRequest.time}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>장소</dt>
-                      <dd>{careRequest.region}</dd>
-                    </div>
-                    <div>
-                      <dt>가치이웃</dt>
-                      <dd>{selectedHelper?.name || "매칭 대기"}</dd>
-                    </div>
-                  </dl>
-                </section>
+            <section className="schedule-detail-card" aria-labelledby="schedule-detail-title">
+              <h2 id="schedule-detail-title">일정 상세</h2>
+              <dl>
+                <div>
+                  <dt>도움 유형</dt>
+                  <dd>{careRequest.careType}</dd>
+                </div>
+                <div>
+                  <dt>일정</dt>
+                  <dd>
+                    {careRequest.date} · {careRequest.time}
+                  </dd>
+                </div>
+                <div>
+                  <dt>장소</dt>
+                  <dd>{careRequest.region}</dd>
+                </div>
+                <div>
+                  <dt>가치이웃</dt>
+                  <dd>{selectedHelper?.name || "매칭 대기"}</dd>
+                </div>
+              </dl>
+            </section>
 
-                <section className="schedule-checklist" aria-labelledby="schedule-checklist-title">
-                  <h2 id="schedule-checklist-title">확인할 내용</h2>
-                  <ul>
-                    <li>약속 시간과 장소를 다시 확인해 주세요.</li>
-                    <li>필요한 준비물이나 전달 사항은 채팅으로 남겨 주세요.</li>
-                    <li>진행 중에는 채팅과 진행 리포트에서 상태를 확인할 수 있습니다.</li>
-                  </ul>
-                </section>
-
-                <section className="schedule-next-actions" aria-labelledby="schedule-next-title">
-                  <h2 id="schedule-next-title">다음 행동</h2>
-                  <p>일정이 맞다면 가치이웃에게 필요한 내용을 채팅으로 전달해 주세요.</p>
-                  <div>
-                    <button type="button" onClick={() => setIsDetailOpen(false)}>
-                      접기
-                    </button>
-                    <button type="button" onClick={onOpenChat}>
-                      채팅하기
-                    </button>
-                  </div>
-                </section>
-              </div>
-            )}
+            <section className="schedule-report-card" aria-labelledby="schedule-report-title">
+              <h2 id="schedule-report-title">예상 계획리포트</h2>
+              <p className="schedule-report-note">
+                가치제공자가 아직 계획리포트를 작성하기 전이에요. 현재 내용은 요청 정보를 바탕으로 한 예상 계획이에요.
+              </p>
+              <ol>
+                {reportItems.map((item) => (
+                  <li key={`${item.time}-${item.label}`}>
+                    <time>{item.time}</time>
+                    <div>
+                      <strong>{item.label}</strong>
+                      {item.description && <p>{item.description}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
           </section>
 
           <section className="match-history-section" aria-labelledby="match-history-title">
@@ -231,8 +221,8 @@ export function GuardianScheduleStatus({
                     다시 요청
                   </button>
                 ) : (
-                  <button className="match-result-secondary" type="button">
-                    후기 보기
+                  <button className="match-result-secondary" type="button" onClick={onOpenReview}>
+                    후기 쓰기
                   </button>
                 )}
               </article>
