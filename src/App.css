@@ -9859,6 +9859,12 @@ textarea {
   justify-content: space-between;
 }
 
+.provider-app-title-row-between > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .provider-app-title-row h2 {
   margin: 0;
   color: #1b1c1a;
