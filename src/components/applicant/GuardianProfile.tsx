@@ -571,19 +571,31 @@ export function GuardianProfile({
 
       <nav className="search-bottom-nav profile-bottom-nav" aria-label="하단 메뉴">
         <button type="button" onClick={onGoHome}>
-          <img src={asset("icon-home-stroke.svg")} alt="" aria-hidden="true" />
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 10.8 12 4l8 6.8V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-9.2Z" />
+          </svg>
           홈
         </button>
         <button type="button" onClick={onOpenSearch}>
-          <img src={asset("icon-search.svg")} alt="" aria-hidden="true" />
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.3-4.3" />
+          </svg>
           검색
         </button>
         <button type="button" onClick={onOpenMatch}>
-          <img className="nav-match-icon" src={asset("icon-match-nav-source.png")} alt="" aria-hidden="true" />
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           매칭현황
         </button>
         <button className="is-active" type="button">
-          <img src={asset("icon-user.svg")} alt="" aria-hidden="true" />
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0" />
+          </svg>
           내 정보
         </button>
       </nav>

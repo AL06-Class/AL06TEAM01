@@ -20,7 +20,7 @@ import { GuardianRequestStatus } from "./GuardianRequestStatus";
 import { GuardianReviewForm } from "./GuardianReviewForm";
 import { GuardianScheduleStatus } from "./GuardianScheduleStatus";
 import { GuardianStartScreen } from "./GuardianStartScreen";
-import { ProviderHome } from "../provider/ProviderHome";
+import { ProviderAppHome } from "../provider/ProviderAppHome";
 
 type Screen =
   | "start"
@@ -63,8 +63,12 @@ export type GuardianProfileInfo = {
   photoUrl: string;
 };
 
-export function ApplicantCareFlow() {
-  const [activeRole, setActiveRole] = useState<"guardian" | "provider">("guardian");
+type ApplicantCareFlowProps = {
+  role: "guardian" | "provider";
+  onRoleChange: (role: "guardian" | "provider") => void;
+};
+
+export function ApplicantCareFlow({ role, onRoleChange }: ApplicantCareFlowProps) {
   const [activeScreen, setActiveScreen] = useState<Screen>("start");
   const [screenHistory, setScreenHistory] = useState<Screen[]>([]);
   const [isRequestSearch, setIsRequestSearch] = useState(false);
@@ -236,17 +240,17 @@ export function ApplicantCareFlow() {
 
   return (
     <main className="app-shell" id="top">
-      {activeRole === "provider" ? (
-        <ProviderHome
+      {role === "provider" ? (
+        <ProviderAppHome
           onSwitchToGuardian={() => {
-            setActiveRole("guardian");
+            onRoleChange("guardian");
             navigate("home");
           }}
         />
       ) : activeScreen === "start" ? (
         <GuardianStartScreen
           onStartGuardian={() => navigate("guardianInfo")}
-          onStartProvider={() => setActiveRole("provider")}
+          onStartProvider={() => onRoleChange("provider")}
         />
       ) : activeScreen === "guardianInfo" ? (
         <GuardianInfoOnboarding
@@ -267,7 +271,7 @@ export function ApplicantCareFlow() {
       ) : activeScreen === "home" ? (
         <ApplicantMainHero
           onStartRequest={openRequestFlow}
-          onSwitchToProvider={() => setActiveRole("provider")}
+          onSwitchToProvider={() => onRoleChange("provider")}
           onOpenSearch={() => {
             setIsRequestSearch(false);
             navigate("search");

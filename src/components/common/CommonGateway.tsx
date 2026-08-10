@@ -1,12 +1,9 @@
 type CommonGatewayProps = {
   onOpenGuardian: () => void;
+  onOpenProvider: () => void;
 };
 
-export function CommonGateway({ onOpenGuardian }: CommonGatewayProps) {
-  const openProvider = () => {
-    window.location.href = "/provider/provider.html#home";
-  };
-
+export function CommonGateway({ onOpenGuardian, onOpenProvider }: CommonGatewayProps) {
   return (
     <main className="common-gateway" aria-labelledby="common-gateway-title">
       <section className="common-gateway-panel">
@@ -31,7 +28,7 @@ export function CommonGateway({ onOpenGuardian }: CommonGatewayProps) {
             <em>보호자 화면으로 이동</em>
           </button>
 
-          <button className="common-role-card" type="button" onClick={openProvider}>
+          <button className="common-role-card" type="button" onClick={onOpenProvider}>
             <span className="common-role-icon provider" aria-hidden="true">
               제공
             </span>

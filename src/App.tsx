@@ -3,12 +3,19 @@ import { CommonGateway } from "./components/common/CommonGateway";
 import { useState } from "react";
 import "./App.css";
 
-export default function App() {
-  const [role, setRole] = useState<"common" | "guardian">("common");
+type AppRole = "common" | "guardian" | "provider";
 
-  if (role === "guardian") {
-    return <ApplicantCareFlow />;
+export default function App() {
+  const [role, setRole] = useState<AppRole>("common");
+
+  if (role === "common") {
+    return (
+      <CommonGateway
+        onOpenGuardian={() => setRole("guardian")}
+        onOpenProvider={() => setRole("provider")}
+      />
+    );
   }
 
-  return <CommonGateway onOpenGuardian={() => setRole("guardian")} />;
+  return <ApplicantCareFlow role={role} onRoleChange={setRole} />;
 }
